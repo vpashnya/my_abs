@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:17.3
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: postgres_db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:\dockers\pg
+
+  oracle:
+    # Docker Hub image (feel free to change the tag "latest" to any other available one)
+    image: gvenzl/oracle-free:latest
+    # Forward Oracle port to localhost
+    ports:
+      - "1521:1521"
+    # Provide passwords and other environment variables to the container
+    environment:
+      ORACLE_PASSWORD: 123456
+      APP_USER: ibs
+      APP_USER_PASSWORD: 123456
+    # Customize healthcheck script options for startup
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+      start_interval: 5s
+
+volumes:
+  postgres_data:
+
+
