@@ -9,6 +9,8 @@ import ru.pvn.objclasses.ObjectInDB;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +41,7 @@ public class FinRecord implements ObjectInDB {
     @Column(name = "rec_sum")
     private BigDecimal recSum;
 
-    @Column(name = "rec_type")
+    @Enumerated(EnumType.STRING)
     private RecType recType;
 
     @ManyToOne(cascade = CascadeType.MERGE)

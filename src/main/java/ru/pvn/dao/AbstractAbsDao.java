@@ -1,17 +1,16 @@
 package ru.pvn.dao;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import ru.pvn.objclasses.ObjectInDB;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-public abstract class AbstractMyAbsDao<T extends ObjectInDB> implements MyAbsDao<T> {
+@AllArgsConstructor
+@Getter
+public abstract class AbstractAbsDao<T extends ObjectInDB> implements AbsDao<T> {
     private final Class<T> currentClass;
     private final EntityManager entityManager;
-
-    protected AbstractMyAbsDao(Class<T> currentClass, EntityManager entityManager) {
-        this.currentClass = currentClass;
-        this.entityManager = entityManager;
-    }
 
     @Override
     public List getAll() {
@@ -33,8 +32,7 @@ public abstract class AbstractMyAbsDao<T extends ObjectInDB> implements MyAbsDao
 
     @Override
     public T get(int id) {
-        T object = entityManager.find(currentClass, id);
-        return object;
+        return entityManager.find(currentClass, id);
     }
 
     @Override
@@ -44,7 +42,4 @@ public abstract class AbstractMyAbsDao<T extends ObjectInDB> implements MyAbsDao
         entityManager.getTransaction().commit();
     }
 
-    protected EntityManager getEntityManager() {
-        return entityManager;
-    }
 }

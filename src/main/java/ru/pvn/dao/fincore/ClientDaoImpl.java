@@ -1,6 +1,6 @@
 package ru.pvn.dao.fincore;
 
-import ru.pvn.dao.AbstractMyAbsDao;
+import ru.pvn.dao.AbstractAbsDao;
 import ru.pvn.dbhelpers.DBHelperFinCore;
 import ru.pvn.objclasses.fincore.Client;
 
@@ -8,15 +8,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-public class ClientDaoImpl extends AbstractMyAbsDao<Client> {
-    private static ClientDaoImpl currentCao = new ClientDaoImpl();
+public class ClientDaoImpl extends AbstractAbsDao<Client> {
+    private static ClientDaoImpl currentDao = new ClientDaoImpl();
 
     private ClientDaoImpl() {
         super(Client.class, DBHelperFinCore.getEntityManager());
     }
 
     public static ClientDaoImpl getDao() {
-        return currentCao;
+        return currentDao;
     }
 
     public Client findOrCreate(Integer id, String name, String inn) {

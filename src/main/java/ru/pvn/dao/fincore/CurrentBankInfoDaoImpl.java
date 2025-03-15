@@ -1,6 +1,6 @@
 package ru.pvn.dao.fincore;
 
-import ru.pvn.dao.AbstractMyAbsDao;
+import ru.pvn.dao.AbstractAbsDao;
 import ru.pvn.dbhelpers.DBHelperFinCore;
 import ru.pvn.objclasses.fincore.CurrentBankInfo;
 
@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
-public class CurrentBankInfoDaoImpl extends AbstractMyAbsDao<CurrentBankInfo> {
+public class CurrentBankInfoDaoImpl extends AbstractAbsDao<CurrentBankInfo> {
     private static CurrentBankInfoDaoImpl currentDao = new CurrentBankInfoDaoImpl();
 
     private CurrentBankInfoDaoImpl() {

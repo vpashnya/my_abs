@@ -4,7 +4,7 @@ import ru.pvn.objclasses.ObjectInDB;
 
 import java.util.List;
 
-public interface MyAbsDao<T extends ObjectInDB> {
+public interface AbsDao<T extends ObjectInDB> {
 
     List<T> getAll();
 

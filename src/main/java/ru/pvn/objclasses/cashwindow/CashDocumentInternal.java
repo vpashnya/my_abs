@@ -39,7 +39,7 @@ public class CashDocumentInternal implements ObjectInDB {
     @Column(name = "exec_info")
     private String executeInfo;
 
-    @Column
+    @Enumerated(EnumType.STRING)
     private State state;
 
     public enum State {

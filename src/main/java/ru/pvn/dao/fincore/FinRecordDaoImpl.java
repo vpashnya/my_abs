@@ -1,6 +1,6 @@
 package ru.pvn.dao.fincore;
 
-import ru.pvn.dao.AbstractMyAbsDao;
+import ru.pvn.dao.AbstractAbsDao;
 import ru.pvn.dbhelpers.DBHelperFinCore;
 import ru.pvn.objclasses.fincore.Account;
 import ru.pvn.objclasses.fincore.FinRecord;
@@ -13,15 +13,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-public class FinRecordDaoImpl extends AbstractMyAbsDao<FinRecord> {
-    private static FinRecordDaoImpl currentCao = new FinRecordDaoImpl();
+public class FinRecordDaoImpl extends AbstractAbsDao<FinRecord> {
+    private static FinRecordDaoImpl currentDao = new FinRecordDaoImpl();
 
     private FinRecordDaoImpl() {
         super(FinRecord.class, DBHelperFinCore.getEntityManager());
     }
 
     public static FinRecordDaoImpl getDao() {
-        return currentCao;
+        return currentDao;
     }
 
     public BigDecimal getRest(Integer accountId, LocalDate date) {

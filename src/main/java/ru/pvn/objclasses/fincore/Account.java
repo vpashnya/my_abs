@@ -21,7 +21,7 @@ public class Account implements ObjectInDB {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "acc_type")
+    @Enumerated(EnumType.STRING)
     private AccType accType;
 
     @Column(name = "acc_num")
