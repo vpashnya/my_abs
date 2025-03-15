@@ -42,6 +42,7 @@ public class FinRecord implements ObjectInDB {
     private BigDecimal recSum;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "rec_type")
     private RecType recType;
 
     @ManyToOne(cascade = CascadeType.MERGE)

@@ -6,5 +6,5 @@ create table cash_document_in(
 				,   doc_sum     decimal(18,2)   not null
 				,   doc_date    date            not null
 				,   exec_info   varchar(2000)
-				,   state       int             not null
+				,   state       varchar(20)     not null
 				);

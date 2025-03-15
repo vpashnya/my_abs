@@ -27,7 +27,7 @@ public class FinRecordDaoImpl extends AbstractAbsDao<FinRecord> {
     public BigDecimal getRest(Integer accountId, LocalDate date) {
         EntityManager entityManager = getEntityManager();
         Query query = entityManager.createNativeQuery("""
-                select coalesce(sum(rec_sum * case rec_type when 0 then -1 else 1 end),0.00)
+                select coalesce(sum(rec_sum * case rec_type when "DEBET" then -1 else 1 end),0.00)
                 from fin_record
                 where   account = ?1
                     and rec_date <= ?2
