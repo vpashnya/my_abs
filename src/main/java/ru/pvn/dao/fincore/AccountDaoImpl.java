@@ -41,11 +41,11 @@ public class AccountDaoImpl extends AbstractAbsDao<Account> {
     public String getNextAccountNum(String balancePosition) {
         EntityManager entityManager = getEntityManager();
         Query query = entityManager.createNativeQuery("""
-                                    select substr(?1, 1, 5) || '810' || lpad(cast((cast(substr(acc_num,9,12) as integer) + 1) as varchar), 12 , '0')\s
-                                    from account\s
-                                    where acc_num like substr(?1, 1, 5) || '%'\s
-                                    order by acc_num desc\s
-                					fetch first 1 rows  only\s
+                                    select substr(?1, 1, 5) || '810' || lpad(cast((cast(substr(acc_num,9,12) as integer) + 1) as varchar), 12 , '0') 
+                                    from account 
+                                    where acc_num like substr(?1, 1, 5) || '%' 
+                                    order by acc_num desc 
+                					fetch first 1 rows  only
                 """);
         query.setParameter(1, balancePosition);
 
