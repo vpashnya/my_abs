@@ -6,14 +6,19 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <groupId>ru.pvn.levelup</groupId>
     <artifactId>my_abs</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>My ABS fin core</name>
+    <modules>
+        <module>fin_core</module>
+        <module>my_abs_core</module>
+        <module>cash_window</module>
+    </modules>
     <properties>
         <maven.compiler.source>23</maven.compiler.source>
         <maven.compiler.target>23</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <dependencies>
+   <!-- <dependencies>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -48,6 +53,6 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         </dependency>
 
 
-    </dependencies>
+    </dependencies>-->
 
 </project>
