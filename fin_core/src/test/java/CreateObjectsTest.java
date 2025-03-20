@@ -1,7 +1,9 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.pvn.levelup.entities.Account;
+import ru.pvn.levelup.entities.Client;
 import ru.pvn.levelup.utils.*;
 
 import java.io.IOException;
@@ -15,6 +17,15 @@ public class CreateObjectsTest {
     final static LocalDate currDate = CurrentBankInfoUtils.getBankInfo().getOperDay();
     final static Random random = new Random();
 
+
+    @Test
+    @DisplayName("Создание кассового счета")
+    @Disabled
+    public void createCassAccount() {
+        Assertions.assertDoesNotThrow(() -> {
+            System.out.println("Открыт счет " + AccountUtils.openInBalancePosition("20202", new Client(1, null, null)));
+        });
+    }
 
     @Test
     @DisplayName("Создание/получения клиентов")
@@ -32,7 +43,7 @@ public class CreateObjectsTest {
         Assertions.assertDoesNotThrow(() -> {
             AccountUtils.getAllAccounts()
                     .stream()
-                    .filter((it) -> (it.getAccType() == Account.AccType.PASSIVE) )
+                    .filter((it) -> (it.getAccType() == Account.AccType.PASSIVE))
                     .forEach((it) -> {
                                 PayDocumentUtils.createAndExecutePayDocument(corAcc, it, new BigDecimal(random.nextInt(20) + 1), currDate);
                             }
@@ -46,7 +57,7 @@ public class CreateObjectsTest {
         Assertions.assertDoesNotThrow(() -> {
             AccountUtils.getAllAccounts()
                     .stream()
-                    .filter((it) -> (it.getAccType() == Account.AccType.PASSIVE) )
+                    .filter((it) -> (it.getAccType() == Account.AccType.PASSIVE))
                     .forEach((it) -> {
                                 PayDocumentUtils.createAndExecutePayDocument(it, corAcc, new BigDecimal(random.nextInt(10) + 1), currDate);
                             }
@@ -83,7 +94,7 @@ public class CreateObjectsTest {
             final Random random = new Random();
             AccountUtils.getAllAccounts()
                     .stream()
-                    .filter((it) -> (it.getAccType() == Account.AccType.ACTIVE) )
+                    .filter((it) -> (it.getAccType() == Account.AccType.ACTIVE))
                     .forEach((it) -> {
                                 if (FinRecordUtils.getRest(it, currDate).compareTo(BigDecimal.ZERO) < 0) {
                                     PayDocumentUtils.createAndExecutePayDocument(it, corAcc, new BigDecimal(random.nextInt(5) + 1), currDate);

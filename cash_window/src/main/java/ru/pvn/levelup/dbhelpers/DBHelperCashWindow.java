@@ -1,4 +1,4 @@
-package ru.pvn.dbhelpers;
+package ru.pvn.levelup.dbhelpers;
 
 import lombok.experimental.UtilityClass;
 import org.hibernate.cfg.Configuration;

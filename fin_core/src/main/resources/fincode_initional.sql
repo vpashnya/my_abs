@@ -17,11 +17,16 @@ begin
 
 	insert into client(full_name, inn) values(sBankName, sBankInn) returning id into rBankClient;
 
-	insert into account(acc_type, acc_num, client) values(2, sCorrNum, rBankClient ) returning id  into rCorrAcc;
+	insert into account(acc_type, acc_num, client) values('MIXED', sCorrNum, rBankClient ) returning id  into rCorrAcc;
 
 	insert into current_bank_info(oper_day, corr_account, bank_client, bank_code)
 				values(to_date('01.01.2025','dd.mm.yyyy'), rCorrAcc, rBankClient, sBankCode) returning id into rCurrentBakInfo;
 
+    insert into account(acc_type, acc_num, client) values('ACTIVE', '20202810000000000004', rBankClient );
+    insert into account(acc_type, acc_num, client) values('ACTIVE', '20202810000000000003', rBankClient );
+    insert into account(acc_type, acc_num, client) values('ACTIVE', '20202810000000000002', rBankClient );
+    insert into account(acc_type, acc_num, client) values('ACTIVE', '20202810000000000001', rBankClient );
+    insert into account(acc_type, acc_num, client) values('ACTIVE', '20202810000000000000', rBankClient );
 
 	commit;
 end;

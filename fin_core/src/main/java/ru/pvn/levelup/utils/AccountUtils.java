@@ -12,6 +12,7 @@ public class AccountUtils {
     public static final List<String> BALANCE_POSITIONS_ACTIVE = List.of(
             "47423", "47425"
             , "45801", "42802", "45803", "45804", "45805"
+            , "20202"
     );
 
     public static final List<String> BALANCE_POSITIONS_PASIVE = List.of(
