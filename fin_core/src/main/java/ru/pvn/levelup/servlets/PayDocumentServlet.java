@@ -37,13 +37,8 @@ public class PayDocumentServlet extends HttpServlet {
         new BufferedReader(req.getReader()).transferTo(stringWriter);
         ObjectMapper mapper = new ObjectMapper();
         PayDocument document = mapper.readValue(stringWriter.toString(), PayDocument.class);
-
-        System.out.println("1" + document);
-
         PayDocumentUtils.savePayDocument(document);
-        System.out.println("2" + document);
         PayDocumentUtils.executePayDocument(document);
-        System.out.println("3" + document);
         resp.getWriter().println(mapper.writeValueAsString(document));
 
     }

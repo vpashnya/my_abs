@@ -37,10 +37,6 @@ public class CashOperation implements ObjectInDB {
     @Enumerated(EnumType.STRING)
     private Direction direction;
 
-    public enum Direction {
-        TO_BANK, FROM_BANK
-    }
-
     @Column
     @Enumerated(EnumType.STRING)
     private State state;
@@ -48,9 +44,13 @@ public class CashOperation implements ObjectInDB {
     @Column(name = "refuse_reason")
     private String refuseReason;
 
+    public enum Direction {
+        TO_BANK, FROM_BANK
+    }
 
     public enum State {
         NEW, SENDED, EXECUTED, REFUSED
     }
+
 
 }

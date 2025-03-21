@@ -15,8 +15,22 @@ public class PayDocumentUtils {
     private PayDocumentDaoImpl payDocumentDao = PayDocumentDaoImpl.getDao();
 
     public void savePayDocument(PayDocument payDocument) {
-        payDocument.setDebet(AccountUtils.getAccoutById(payDocument.getDebet().getId()));
-        payDocument.setCredit(AccountUtils.getAccoutById(payDocument.getCredit().getId()));
+        if (payDocument.getDebet().getId() != null) {
+            payDocument.setDebet(AccountUtils.getAccoutById(payDocument.getDebet().getId()));
+        } else if (payDocument.getDebet().getAccNum() != null) {
+            payDocument.setDebet(AccountUtils.getAccoutByNum(payDocument.getDebet().getAccNum()));
+        } else {
+            throw new RuntimeException("Не возможно определить счет по дебету");
+        }
+
+        if (payDocument.getCredit().getId() != null) {
+            payDocument.setCredit(AccountUtils.getAccoutById(payDocument.getCredit().getId()));
+        } else if (payDocument.getCredit().getAccNum() != null) {
+            payDocument.setCredit(AccountUtils.getAccoutByNum(payDocument.getCredit().getAccNum()));
+        } else {
+            throw new RuntimeException("Не возможно определить счет по кредиту");
+        }
+
         payDocument.setState(PayDocument.State.NEW);
         payDocument.setDocDate(CurrentBankInfoUtils.getBankInfo().getOperDay());
         payDocumentDao.save(payDocument);

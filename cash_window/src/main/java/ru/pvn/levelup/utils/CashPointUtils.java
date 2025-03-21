@@ -18,4 +18,6 @@ public class CashPointUtils {
     public CashPoint getCashPointById(Integer id) {
         return currentDao.get(id);
     }
+
+
 }

@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>КАССЫ</title>
+    <title>КАССОВЫЕ ОПЕРАЦИИ</title>
 </head>
 <body>
 
@@ -30,23 +30,30 @@
     <tr>
         <th>id</th>
         <th>Название кассы</th>
-        <th>Счет кассы</th>
-        <th>Кол-во документов</th>
+        <th>Счет операции</th>
+        <th>Сумма операции</th>
+        <th>Пополнение/снятие</th>
+        <th>Состояние</th>
+        <th>Причина отказа</th>
+
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${cashPointList}" var="cashPoint">
+    <c:forEach items="${cashOperationList}" var="cashOperation">
         <tr>
-            <td>${cashPoint.cashPoint.id}</td>
-            <td>${cashPoint.cashPoint.pointName}</td>
-            <td>${cashPoint.cashPoint.pointAccountNum}</td>
-            <td>${cashPoint.count}</td>
+            <td>${cashOperation.id}</td>
+            <td>${cashOperation.cashPoint.pointName}</td>
+            <td>${cashOperation.accountNum}</td>
+            <td>${cashOperation.sumDoc}</td>
+            <td>${cashOperation.direction}</td>
+            <td>${cashOperation.state}</td>
+            <td>${cashOperation.refuseReason}</td>
+
         </tr>
     </c:forEach>
     </tbody>
 </table>
 
-<a href="cashoperation">Кассовые документы</a>
 
 </body>
 </html>

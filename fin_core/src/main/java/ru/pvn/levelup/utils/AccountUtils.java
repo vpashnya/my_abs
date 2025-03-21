@@ -54,6 +54,10 @@ public class AccountUtils {
         return accountDao.get(id);
     }
 
+    public Account getAccoutByNum(String accNum) {
+        return accountDao.findByNum(accNum);
+    }
+
     public Account getAccount(Account.AccType accType, String accNum, Client client) {
         Account account = accountDao.findOrCreate(null, accType, accNum, client);
         return account;

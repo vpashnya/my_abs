@@ -63,7 +63,7 @@ public class PayDocument implements ObjectInDB {
         return "PayDocument{" +
                 "id=" + id +
                 ", debet=" + debet.getAccNum() +
-                ", credit=" + credit.getAccType() +
+                ", credit=" + credit.getAccNum() +
                 ", docSum=" + docSum +
                 ", docDate=" + docDate +
                 ", state=" + state +

@@ -38,6 +38,12 @@ public class AccountDaoImpl extends AbstractAbsDao<Account> {
 
     }
 
+    public Account findByNum(String accNum) {
+        Query query = getEntityManager().createQuery("from Account where  acc_num = ?1");
+        query.setParameter(1, accNum);
+        return (Account) query.getResultList().getFirst();
+    }
+
     public String getNextAccountNum(String balancePosition) {
         EntityManager entityManager = getEntityManager();
         Query query = entityManager.createNativeQuery("""
