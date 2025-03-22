@@ -99,12 +99,12 @@ public class CashOperationUtils {
                 .uri(URI.create(IntegrationResource.FINCORE_PAYDOCUMENT))
                 .headers("Content-Type", "text/plain;charset=UTF-8")
                 .version(HttpClient.Version.HTTP_1_1)
-                .POST(HttpRequest.BodyPublishers.ofString(sReqBody))
+                .POST(HttpRequest.BodyPublishers.ofByteArray(sReqBody.getBytes()))
                 .build();
 
-        HttpResponse<String> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<byte[]> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofByteArray());
 
-        return jsonMapper.readValue(resp.body(), PayDocument.class);
+        return jsonMapper.readValue(new String(resp.body()), PayDocument.class);
     }
 
     @SneakyThrows
@@ -143,9 +143,9 @@ public class CashOperationUtils {
                 .GET()
                 .build();
 
-        HttpResponse<String> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<byte[]> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofByteArray());
 
-        return jsonMapper.readValue(resp.body(), Account.class);
+        return jsonMapper.readValue(new String(resp.body()), Account.class);
     }
 
     public Integer getCountOperationsByCashPoint(CashPoint cashPoint) {

@@ -32,15 +32,11 @@ public class CashOperationServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StringWriter stringWriter = new StringWriter();
-        new BufferedReader(req.getReader()).transferTo(stringWriter);
+        String reqBody  = new String(req.getInputStream().readAllBytes()) ;
         ObjectMapper mapper = new ObjectMapper();
-
-        CashOperation cashOperation = mapper.readValue(stringWriter.getBuffer().toString(), CashOperation.class);
+        CashOperation cashOperation = mapper.readValue(reqBody, CashOperation.class);
         CashOperationUtils.saveAndExecute(cashOperation);
-
-        resp.getWriter().println(mapper.writeValueAsString(cashOperation));
-
+        resp.getOutputStream().write(mapper.writeValueAsString(cashOperation).getBytes());
     }
 
 }

@@ -36,13 +36,13 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach items="${accountList}" var="ac">
+    <c:forEach items="${accountList}" var="account">
         <tr>
-            <td>${ac.account.id}</td>
-            <td>${ac.account.accType}</td>
-            <td>${ac.account.accNum}</td>
-            <td>${ac.account.client.fullName}</td>
-            <td>${ac.rest}</td>
+            <td>${account.id}</td>
+            <td>${account.accType}</td>
+            <td>${account.accNum}</td>
+            <td>${account.client.fullName}</td>
+            <td>${account.rest}</td>
         </tr>
     </c:forEach>
     </tbody>

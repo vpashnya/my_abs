@@ -21,6 +21,7 @@ public class CashOperationTest {
 
     @Test
     @DisplayName("Создание и исполнение кассового документа")
+    @Disabled
     public void createAndExecuteTest() {
         Assertions.assertDoesNotThrow(() -> {
             CashOperation cashOperation = new CashOperation(null

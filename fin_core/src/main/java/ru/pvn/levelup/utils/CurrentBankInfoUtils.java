@@ -1,13 +1,11 @@
 package ru.pvn.levelup.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import ru.pvn.levelup.dao.CurrentBankInfoDaoImpl;
 import ru.pvn.levelup.entities.CurrentBankInfo;
 import ru.pvn.levelup.integration.IntegrationResource;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -29,7 +27,7 @@ public class CurrentBankInfoUtils {
     }
 
     @SneakyThrows
-    public void endDayCashWindow(){
+    public void endDayCashWindow() {
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest req = HttpRequest
                 .newBuilder()
@@ -39,7 +37,7 @@ public class CurrentBankInfoUtils {
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
 
-        HttpResponse<String> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofString());
+        httpClient.send(req, HttpResponse.BodyHandlers.ofByteArray());
     }
 
 }

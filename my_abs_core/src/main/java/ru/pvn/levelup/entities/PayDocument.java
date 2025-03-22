@@ -71,6 +71,7 @@ public class PayDocument implements ObjectInDB {
                 ", docDate=" + docDate +
                 ", state=" + state +
                 ", purpose='" + purpose +
+                ", refuse_reason=" + refuseReason +
                 '}';
     }
 }

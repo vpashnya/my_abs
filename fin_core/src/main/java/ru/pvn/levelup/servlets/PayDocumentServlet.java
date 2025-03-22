@@ -9,9 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,13 +31,11 @@ public class PayDocumentServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StringWriter stringWriter = new StringWriter();
-        new BufferedReader(req.getReader()).transferTo(stringWriter);
+        String reqBody  = new String(req.getInputStream().readAllBytes()) ;
         ObjectMapper mapper = new ObjectMapper();
-        PayDocument document = mapper.readValue(stringWriter.toString(), PayDocument.class);
+        PayDocument document = mapper.readValue(reqBody, PayDocument.class);
         PayDocumentUtils.savePayDocument(document);
         PayDocumentUtils.executePayDocument(document);
-        resp.getWriter().println(mapper.writeValueAsString(document));
-
+        resp.getOutputStream().write(mapper.writeValueAsString(document).getBytes());
     }
 }

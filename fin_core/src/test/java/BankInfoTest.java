@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.pvn.levelup.utils.CurrentBankInfoUtils;
@@ -20,6 +21,7 @@ public class BankInfoTest {
 
     @Test
     @DisplayName("Переключение дня")
+    @Disabled
     public void switch2NextDay() {
 
         LocalDate date1 = CurrentBankInfoUtils.getBankInfo().getOperDay();

@@ -2,10 +2,8 @@ package ru.pvn.levelup.servlets;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.pvn.levelup.entities.Account;
-import ru.pvn.levelup.entities.PayDocument;
 import ru.pvn.levelup.utils.AccountUtils;
 import ru.pvn.levelup.utils.FinRecordUtils;
-import ru.pvn.levelup.utils.PayDocumentUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +32,6 @@ public class AccountRestServlet extends HttpServlet {
 
         account.setRest(FinRecordUtils.getRest(account));
         ObjectMapper mapper = new ObjectMapper();
-        resp.getWriter().println(mapper.writeValueAsString(account));
+        resp.getOutputStream().write(mapper.writeValueAsString(account).getBytes());
     }
 }

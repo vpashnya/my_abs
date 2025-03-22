@@ -12,6 +12,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <module>fin_core</module>
         <module>my_abs_core</module>
         <module>cash_window</module>
+        <module>deposits</module>
     </modules>
     <properties>
         <maven.compiler.source>23</maven.compiler.source>

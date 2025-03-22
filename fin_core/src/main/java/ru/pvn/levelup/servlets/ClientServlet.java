@@ -9,9 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +31,11 @@ public class ClientServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StringWriter stringWriter = new StringWriter();
-        new BufferedReader(req.getReader()).transferTo(stringWriter);
+        String reqBody  = new String(req.getInputStream().readAllBytes()) ;
         ObjectMapper mapper = new ObjectMapper();
-        Client client = mapper.readValue(stringWriter.getBuffer().toString(), Client.class);
-        ClientUtils.saveClient(client);
-        resp.getWriter().println(mapper.writeValueAsString(client));
+        Client client = mapper.readValue(reqBody, Client.class);
+        Client chkClient = ClientUtils.getClientByParams(client.getId(), client.getFullName(), client.getInn());
+        resp.getOutputStream().write(mapper.writeValueAsString(chkClient).getBytes());
 
     }
 }
