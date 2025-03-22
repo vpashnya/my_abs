@@ -14,4 +14,5 @@ create table cash_operation(
                         ,   direction           varchar(20)     not null
                         ,   state               varchar(20)     not null
                         ,   refuse_reason       varchar(2000)
+                        ,   purpose             varchar(2000)   not null
                     );

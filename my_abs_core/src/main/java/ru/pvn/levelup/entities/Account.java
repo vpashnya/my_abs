@@ -7,16 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 import ru.pvn.levelup.abscore.ObjectInDB;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.math.BigDecimal;
 
 
 @Entity
@@ -40,6 +32,9 @@ public class Account implements ObjectInDB {
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "client")
     private Client client;
+
+    @Transient
+    private BigDecimal rest;
 
     public enum AccType {ACTIVE, PASSIVE, MIXED}
 }

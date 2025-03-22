@@ -33,6 +33,7 @@
         <th>Кредит</th>
         <th>Сумма</th>
         <th>Дата</th>
+        <th>Назначение</th>
         <th>Состояние</th>
         <th>Причина отказа</th>
     </tr>
@@ -45,6 +46,7 @@
             <td>${payDoc.credit.accNum}</td>
             <td>${payDoc.docSum}</td>
             <td>${payDoc.docDate}</td>
+            <td>${payDoc.purpose}</td>
             <td>${payDoc.state}</td>
             <td>${payDoc.refuseReason}</td>
         </tr>

@@ -38,7 +38,7 @@ public class Objects2JsonTests {
     @DisplayName("Счет в Json")
     public void account2JsonTest() throws IOException {
         Assertions.assertDoesNotThrow(() -> {
-            Account account = new Account(null, null, "40817", new Client(5, null, null));
+            Account account = new Account(null, null, "40817", new Client(5, null, null), null);
             System.out.println(jsonMapper.writeValueAsString(account));
         });
 
@@ -49,9 +49,10 @@ public class Objects2JsonTests {
     public void payDocument2JsonTest() throws IOException {
         Assertions.assertDoesNotThrow(() -> {
             PayDocument payDocument = new PayDocument(null
-                    , new Account(1, null, null, null)
-                    , new Account(10, null, null, null)
+                    , new Account(1, null, null, null, null)
+                    , new Account(10, null, null, null,null)
                     , new BigDecimal(10)
+                    , null
                     , null
                     , null
                     , null);

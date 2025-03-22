@@ -33,6 +33,7 @@
         <th>Счет операции</th>
         <th>Сумма операции</th>
         <th>Пополнение/снятие</th>
+        <th>Назначение</th>
         <th>Состояние</th>
         <th>Причина отказа</th>
 
@@ -46,6 +47,7 @@
             <td>${cashOperation.accountNum}</td>
             <td>${cashOperation.sumDoc}</td>
             <td>${cashOperation.direction}</td>
+            <td>${cashOperation.purpose}</td>
             <td>${cashOperation.state}</td>
             <td>${cashOperation.refuseReason}</td>
 

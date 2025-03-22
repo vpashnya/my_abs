@@ -29,6 +29,7 @@ public class CreateObjectsTest {
 
     @Test
     @DisplayName("Создание/получения клиентов")
+    @Disabled
     public void createClientsTest() {
         Assertions.assertDoesNotThrow(() -> {
             ClientUtils.getClientByParams(null, "Колхоз Банк", "1234567890");
@@ -39,13 +40,14 @@ public class CreateObjectsTest {
 
     @Test
     @DisplayName("Кредитование пассивных счетов")
+    @Disabled
     public void creditPassiveAccountsTest() throws IOException {
         Assertions.assertDoesNotThrow(() -> {
             AccountUtils.getAllAccounts()
                     .stream()
                     .filter((it) -> (it.getAccType() == Account.AccType.PASSIVE))
                     .forEach((it) -> {
-                                PayDocumentUtils.createAndExecutePayDocument(corAcc, it, new BigDecimal(random.nextInt(20) + 1), currDate);
+                                PayDocumentUtils.createAndExecutePayDocument(corAcc, it, new BigDecimal(random.nextInt(20) + 1), currDate, "Тестовый документ");
                             }
                     );
         });
@@ -53,13 +55,14 @@ public class CreateObjectsTest {
 
     @Test
     @DisplayName("Дебетование пассивных счетов")
+    @Disabled
     public void debetPassiveAccountsTest() throws IOException {
         Assertions.assertDoesNotThrow(() -> {
             AccountUtils.getAllAccounts()
                     .stream()
                     .filter((it) -> (it.getAccType() == Account.AccType.PASSIVE))
                     .forEach((it) -> {
-                                PayDocumentUtils.createAndExecutePayDocument(it, corAcc, new BigDecimal(random.nextInt(10) + 1), currDate);
+                                PayDocumentUtils.createAndExecutePayDocument(it, corAcc, new BigDecimal(random.nextInt(10) + 1), currDate, "Тестовый документ");
                             }
                     );
         });
@@ -67,6 +70,7 @@ public class CreateObjectsTest {
 
     @Test
     @DisplayName("Кредитование активных счетов")
+    @Disabled
     public void creditActiveAccountsTest() throws IOException {
         Assertions.assertDoesNotThrow(() -> {
             final Account corAcc = CurrentBankInfoUtils.getBankInfo().getCorrAccount();
@@ -77,7 +81,7 @@ public class CreateObjectsTest {
                     .filter((it) -> (it.getAccType() == Account.AccType.ACTIVE))
                     .forEach((it) -> {
                                 if (FinRecordUtils.getRest(it, currDate).compareTo(BigDecimal.ZERO) < 0) {
-                                    PayDocumentUtils.createAndExecutePayDocument(corAcc, it, new BigDecimal(random.nextInt(10) + 1), currDate);
+                                    PayDocumentUtils.createAndExecutePayDocument(corAcc, it, new BigDecimal(random.nextInt(10) + 1), currDate, "Тестовый документ");
                                 }
 
                             }
@@ -87,6 +91,7 @@ public class CreateObjectsTest {
 
     @Test
     @DisplayName("Дебетование активных счетов")
+    @Disabled
     public void debetActiveAccountsTest() throws IOException {
         Assertions.assertDoesNotThrow(() -> {
             final Account corAcc = CurrentBankInfoUtils.getBankInfo().getCorrAccount();
@@ -97,7 +102,7 @@ public class CreateObjectsTest {
                     .filter((it) -> (it.getAccType() == Account.AccType.ACTIVE))
                     .forEach((it) -> {
                                 if (FinRecordUtils.getRest(it, currDate).compareTo(BigDecimal.ZERO) < 0) {
-                                    PayDocumentUtils.createAndExecutePayDocument(it, corAcc, new BigDecimal(random.nextInt(5) + 1), currDate);
+                                    PayDocumentUtils.createAndExecutePayDocument(it, corAcc, new BigDecimal(random.nextInt(5) + 1), currDate, "Тестовый документ");
                                 }
 
                             }

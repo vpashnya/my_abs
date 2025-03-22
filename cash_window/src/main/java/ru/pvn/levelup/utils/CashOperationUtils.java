@@ -2,14 +2,15 @@ package ru.pvn.levelup.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import ru.pvn.levelup.dao.CashOperationDaoImpl;
 import ru.pvn.levelup.entities.Account;
 import ru.pvn.levelup.entities.CashOperation;
 import ru.pvn.levelup.entities.CashPoint;
 import ru.pvn.levelup.entities.PayDocument;
+import ru.pvn.levelup.integration.IntegrationResource;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -22,6 +23,7 @@ import java.util.Random;
 public class CashOperationUtils {
     private CashOperationDaoImpl currentDao = CashOperationDaoImpl.getCurrentDao();
     private Random random = new Random();
+    private ObjectMapper jsonMapper = new ObjectMapper();
 
     public List<CashOperation> getAllCashOperations() {
         return currentDao.getAll();
@@ -30,6 +32,7 @@ public class CashOperationUtils {
     public CashOperation getCashOperationById(int id) {
         return currentDao.get(id);
     }
+
 
     public void saveAndExecute(CashOperation cashOperation) {
         cashOperation.setState(CashOperation.State.NEW);
@@ -46,19 +49,23 @@ public class CashOperationUtils {
         }
 
         try {
+            if (cashOperation.getDirection() == CashOperation.Direction.FROM_BANK) {
+                normalizeCashAccountRest(cashOperation.getCashPoint(), cashOperation.getSumDoc());
+            }
+
             PayDocument payDocTo = convertToPayDocument(cashOperation);
             cashOperation.setState(CashOperation.State.SENDED);
             currentDao.save(cashOperation);
 
             PayDocument payDocFrom = sendPayDocument2FinCore(payDocTo);
 
-            if(payDocFrom.getState() == PayDocument.State.EXECUTED){
+            if (payDocFrom.getState() == PayDocument.State.EXECUTED) {
                 cashOperation.setState(CashOperation.State.EXECUTED);
-            }else{
+            } else {
                 cashOperation.setState(CashOperation.State.REFUSED);
                 cashOperation.setRefuseReason(payDocFrom.getRefuseReason());
             }
-        }catch (RuntimeException | IOException | InterruptedException e){
+        } catch (RuntimeException e) {
             cashOperation.setState(CashOperation.State.REFUSED);
             cashOperation.setRefuseReason(e.getMessage());
         }
@@ -77,19 +84,19 @@ public class CashOperationUtils {
             debet.setAccNum(cashOperation.getAccountNum());
         }
 
-        PayDocument payDocument = new PayDocument(null, debet, credit, cashOperation.getSumDoc(), null, null, null);
+        PayDocument payDocument = new PayDocument(null, debet, credit, cashOperation.getSumDoc(), null, null, null, cashOperation.getPurpose());
         return payDocument;
     }
 
-    public PayDocument sendPayDocument2FinCore(PayDocument payDocument) throws IOException, InterruptedException {
-        ObjectMapper jsonMapper = new ObjectMapper();
+    @SneakyThrows
+    public PayDocument sendPayDocument2FinCore(PayDocument payDocument) {
         jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
         String sReqBody = jsonMapper.writeValueAsString(payDocument);
 
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest req = HttpRequest
                 .newBuilder()
-                .uri(URI.create("http://localhost:8080/fin_core_war/paydocument"))
+                .uri(URI.create(IntegrationResource.FINCORE_PAYDOCUMENT))
                 .headers("Content-Type", "text/plain;charset=UTF-8")
                 .version(HttpClient.Version.HTTP_1_1)
                 .POST(HttpRequest.BodyPublishers.ofString(sReqBody))
@@ -97,9 +104,48 @@ public class CashOperationUtils {
 
         HttpResponse<String> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println("Resp.body : " + resp.body());
-
         return jsonMapper.readValue(resp.body(), PayDocument.class);
+    }
+
+    @SneakyThrows
+    public void normalizeCashAccountRest(CashPoint cashPoint, BigDecimal needSum) {
+        Account account = getAccountByNum(cashPoint.getPointAccountNum());
+
+        BigDecimal docSum = needSum.add(account.getRest());
+
+        if (BigDecimal.ZERO.compareTo(docSum) < 0) {
+            PayDocument payDoc = new PayDocument(null
+                    , account
+                    , new Account(1, null, null, null, null)
+                    , docSum
+                    , null
+                    , null
+                    , null
+                    , "Подкрепление кассы " + cashPoint.getPointName()
+            );
+            PayDocument realDoc = sendPayDocument2FinCore(payDoc);
+            if (realDoc.getState() == PayDocument.State.REFUSED) {
+                throw new RuntimeException("Ошибка подкрепления кассы " + realDoc.getRefuseReason());
+            }
+
+        }
+
+    }
+
+    @SneakyThrows
+    public Account getAccountByNum(String accountNum) {
+        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest
+                .newBuilder()
+                .uri(URI.create(IntegrationResource.FINCORE_ACCOUNTREST + "?accnum=" + accountNum))
+                .headers("Content-Type", "text/plain;charset=UTF-8")
+                .version(HttpClient.Version.HTTP_1_1)
+                .GET()
+                .build();
+
+        HttpResponse<String> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofString());
+
+        return jsonMapper.readValue(resp.body(), Account.class);
     }
 
     public Integer getCountOperationsByCashPoint(CashPoint cashPoint) {

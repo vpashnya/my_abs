@@ -1,16 +1,12 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ru.pvn.levelup.entities.CashOperation;
-import ru.pvn.levelup.entities.CashPoint;
 import ru.pvn.levelup.utils.CashOperationUtils;
 import ru.pvn.levelup.utils.CashPointUtils;
 
+import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @DisplayName("Операции с кассовыми документами")
@@ -33,6 +29,7 @@ public class CashOperationTest {
                     , new BigDecimal(10)
                     , CashOperation.Direction.TO_BANK
                     , null
+                    , null
                     , null);
             CashOperationUtils.saveAndExecute(cashOperation);
             System.out.println(cashOperation);
@@ -49,7 +46,8 @@ public class CashOperationTest {
                     , new BigDecimal(10)
                     , CashOperation.Direction.TO_BANK
                     , null
-                    , null);
+                    , null
+                    , "XXXXXX");
 
             System.out.println(jsonMapper.writeValueAsString(cashOperation));
         });
@@ -73,13 +71,14 @@ public class CashOperationTest {
 
     @Test
     @DisplayName("Конвертация кассовой операции в платежный документ")
-    public void cashOperation2payDocumentTest(){
-        Assertions.assertDoesNotThrow(()->{
+    public void cashOperation2payDocumentTest() {
+        Assertions.assertDoesNotThrow(() -> {
             CashOperation cashOperation1 = new CashOperation(null
                     , CashPointUtils.getAllCashPoints().getFirst()
                     , "40702810000000000000"
                     , new BigDecimal(10)
                     , CashOperation.Direction.TO_BANK
+                    , null
                     , null
                     , null
             );
@@ -92,9 +91,24 @@ public class CashOperationTest {
                     , CashOperation.Direction.FROM_BANK
                     , null
                     , null
+                    , null
             );
             System.out.println(CashOperationUtils.convertToPayDocument(cashOperation2));
 
+        });
+    }
+
+
+    @Test
+    @DisplayName("Нормализация кассового счета")
+    @Disabled
+    public void normCashPointAccTest() {
+        Assertions.assertDoesNotThrow(() -> {
+            CashPointUtils.getAllCashPoints().stream().forEach(
+                    (it) -> {
+                        CashOperationUtils.normalizeCashAccountRest(it, new BigDecimal(10));
+
+                    });
         });
     }
 

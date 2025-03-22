@@ -21,6 +21,7 @@ create table pay_document(
                 ,   doc_date    date            not null
                 ,   state           varchar(20)     not null
                 ,   refuse_reason   varchar(2000)
+                ,   purpose         varchar(2000) not null
                 );
 
 create table fin_record(

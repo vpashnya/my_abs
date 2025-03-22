@@ -44,6 +44,9 @@ public class CashOperation implements ObjectInDB {
     @Column(name = "refuse_reason")
     private String refuseReason;
 
+    @Column
+    private String purpose;
+
     public enum Direction {
         TO_BANK, FROM_BANK
     }

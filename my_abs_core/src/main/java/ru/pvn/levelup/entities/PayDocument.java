@@ -54,6 +54,9 @@ public class PayDocument implements ObjectInDB {
     @Column(name = "refuse_reason")
     private String refuseReason;
 
+    @Column
+    private String purpose;
+
     public enum State {
         NEW, EXECUTED, REFUSED
     }
@@ -67,6 +70,7 @@ public class PayDocument implements ObjectInDB {
                 ", docSum=" + docSum +
                 ", docDate=" + docDate +
                 ", state=" + state +
+                ", purpose='" + purpose +
                 '}';
     }
 }

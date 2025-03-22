@@ -31,7 +31,7 @@ public class AccountDaoImpl extends AbstractAbsDao<Account> {
         if (!accounts.isEmpty()) {
             return accounts.get(0);
         } else {
-            Account account = new Account(null, accType, accNum, client);
+            Account account = new Account(null, accType, accNum, client, null);
             save(account);
             return account;
         }

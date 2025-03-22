@@ -36,8 +36,8 @@ public class PayDocumentUtils {
         payDocumentDao.save(payDocument);
     }
 
-    public PayDocument createPayDocument(Account debet, Account credit, BigDecimal docSum, LocalDate date) {
-        PayDocument payDocument = new PayDocument(null, debet, credit, docSum, date, PayDocument.State.NEW, null);
+    public PayDocument createPayDocument(Account debet, Account credit, BigDecimal docSum, LocalDate date, String purpose) {
+        PayDocument payDocument = new PayDocument(null, debet, credit, docSum, date, PayDocument.State.NEW, null, purpose);
         payDocumentDao.save(payDocument);
         return payDocument;
     }
@@ -55,11 +55,11 @@ public class PayDocumentUtils {
         return document;
     }
 
-    public PayDocument createAndExecutePayDocument(Account debet, Account credit, BigDecimal docSum, LocalDate date) {
+    public PayDocument createAndExecutePayDocument(Account debet, Account credit, BigDecimal docSum, LocalDate date, String purpose) {
         if (docSum.compareTo(BigDecimal.ZERO) == 0) {
             throw new RuntimeException("Сумма документа не может быть 0");
         }
-        return executePayDocument(createPayDocument(debet, credit, docSum, date));
+        return executePayDocument(createPayDocument(debet, credit, docSum, date, purpose));
 
     }
 
