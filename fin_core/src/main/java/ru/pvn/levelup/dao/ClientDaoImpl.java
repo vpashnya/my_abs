@@ -30,7 +30,7 @@ public class ClientDaoImpl extends AbstractAbsDao<Client> {
         if (!clients.isEmpty()) {
             return clients.get(0);
         } else {
-            Client client = new Client(id, name, inn);
+            Client client = new Client(null, name, inn);
             save(client);
             return client;
         }

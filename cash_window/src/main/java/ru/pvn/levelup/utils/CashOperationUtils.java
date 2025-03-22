@@ -91,7 +91,7 @@ public class CashOperationUtils {
     @SneakyThrows
     public PayDocument sendPayDocument2FinCore(PayDocument payDocument) {
         jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        String sReqBody = jsonMapper.writeValueAsString(payDocument);
+        String reqBody = jsonMapper.writeValueAsString(payDocument);
 
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest req = HttpRequest
@@ -99,7 +99,7 @@ public class CashOperationUtils {
                 .uri(URI.create(IntegrationResource.FINCORE_PAYDOCUMENT))
                 .headers("Content-Type", "text/plain;charset=UTF-8")
                 .version(HttpClient.Version.HTTP_1_1)
-                .POST(HttpRequest.BodyPublishers.ofByteArray(sReqBody.getBytes()))
+                .POST(HttpRequest.BodyPublishers.ofByteArray(reqBody.getBytes()))
                 .build();
 
         HttpResponse<byte[]> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofByteArray());

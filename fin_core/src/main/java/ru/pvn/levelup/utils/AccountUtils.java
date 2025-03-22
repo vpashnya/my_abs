@@ -17,7 +17,7 @@ public class AccountUtils {
 
     public static final List<String> BALANCE_POSITIONS_PASIVE = List.of(
             "40701", "40702", "40703"
-            , "42301", "42302", "42303", "42304", "42305"
+            , "42301", "42302", "42303", "42304", "42305", "42307", "42309"
             , "40802", "40817", "40821"
     );
 
