@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @UtilityClass
 public class EndDayUtils {
-    public void SendAllCash2CorAccount() {
+    public void sendAllCash2CorAccount() {
         CashPointUtils.getAllCashPoints().stream().forEach(cashPoint -> {
             Account accCashPoint = CashOperationUtils.getAccountByNum(cashPoint.getPointAccountNum());
             if (BigDecimal.ZERO.compareTo(accCashPoint.getRest()) != 0) {

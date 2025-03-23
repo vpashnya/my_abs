@@ -11,7 +11,7 @@ public class EndDayTest {
     @Disabled
     public void cash2CorAccTest() {
         Assertions.assertDoesNotThrow(() -> {
-            EndDayUtils.SendAllCash2CorAccount();
+            EndDayUtils.sendAllCash2CorAccount();
         });
     }
 }

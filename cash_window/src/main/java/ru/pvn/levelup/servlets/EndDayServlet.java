@@ -12,7 +12,7 @@ import java.io.IOException;
 @WebServlet("/endday")
 public class EndDayServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        EndDayUtils.SendAllCash2CorAccount();
+        EndDayUtils.sendAllCash2CorAccount();
         resp.getWriter().println("Day ended in cash window !");
     }
 }
