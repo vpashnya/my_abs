@@ -4,7 +4,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.pvn.levelup.entities.Account;
 import ru.pvn.levelup.entities.Client;
-import ru.pvn.levelup.utils.*;
+import ru.pvn.levelup.utils.AccountUtils;
+import ru.pvn.levelup.utils.ClientUtils;
+import ru.pvn.levelup.utils.CurrentBankInfoUtils;
+import ru.pvn.levelup.utils.FinRecordUtils;
+import ru.pvn.levelup.utils.PayDocumentUtils;
 
 import java.io.IOException;
 import java.math.BigDecimal;

@@ -5,7 +5,11 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import ru.pvn.levelup.dao.DepositOperationDaoImpl;
-import ru.pvn.levelup.entities.*;
+import ru.pvn.levelup.entities.Account;
+import ru.pvn.levelup.entities.CashOperation;
+import ru.pvn.levelup.entities.Deposit;
+import ru.pvn.levelup.entities.DepositOperation;
+import ru.pvn.levelup.entities.PayDocument;
 import ru.pvn.levelup.integration.IntegrationResource;
 
 import java.math.BigDecimal;
