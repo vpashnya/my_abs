@@ -3,7 +3,7 @@
 
 <html>
 <head>
-    <title>ДЕПОЗИТЫ</title>
+    <title>ОПЕРАЦИИ ДЕПОЗИТОВ</title>
 </head>
 <body>
 
@@ -30,32 +30,31 @@
     <thead>
     <tr>
         <th>id</th>
-        <th>Наименование клиента</th>
-        <th>Номер счета</th>
-        <th>Срок в днях</th>
-        <th>Ставка % годовых</th>
-        <th>Дата открытия</th>
-        <th>Сумма вклада</th>
-        <th>Сумма на счете</th>
-        <th>Статус договора</th>
-        <th>Выплата вклада</th>
-
-
+        <th>id депозита</th>
+        <th>Дата операции</th>
+        <th>Сумма операции</th>
+        <th>Плат. документ</th>
+        <th>Кассовая операция</th>
+        <th>Назначение операции</th>
+        <th>Состояние</th>
+        <th>Причина отказа</th>
     </tr>
+
     </thead>
+
     <tbody>
-    <c:forEach items="${depositList}" var="deposit">
+    <c:forEach items="${depOperList}" var="depOper">
         <tr>
-            <td>${deposit.id}</td>
-            <td>${deposit.clientName}</td>
-            <td>${deposit.accountNum}</td>
-            <td>${deposit.duration}</td>
-            <td>${deposit.rate}</td>
-            <td>${deposit.dateOpen}</td>
-            <td>${deposit.amount}</td>
-            <td>${deposit.accountRest}</td>
-            <td>${deposit.status}</td>
-            <td>${deposit.payTo}</td>
+            <td>${depOper.id}</td>
+            <td>${depOper.deposit.id}</td>
+            <td>${depOper.operDate}</td>
+            <td>${depOper.operSum}</td>
+            <td>${depOper.payDocId}</td>
+            <td>${depOper.cashOperId}</td>
+            <td>${depOper.purpose}</td>
+            <td>${depOper.state}</td>
+            <td>${depOper.refuseReason}</td>
+
         </tr>
     </c:forEach>
     </tbody>

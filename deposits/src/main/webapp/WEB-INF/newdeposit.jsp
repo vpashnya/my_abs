@@ -3,7 +3,17 @@
 <html>
 <body>
 
-<form method="POST">
+<br><br>
+<a href="deposit">Просмотреть список депозитов</a>
+
+<br><br>
+<a href="depositoperation">Просмотреть список операций депозитов</a>
+
+<br><br>
+<br><br>
+=========================================================================================================
+
+<form method="POST" accept-charset="UTF-8">
     <table>
         <tr>
             <td>ИНН:</td>

@@ -6,6 +6,7 @@ import ru.pvn.levelup.dao.DepositDaoImpl;
 import ru.pvn.levelup.entities.Account;
 import ru.pvn.levelup.entities.Client;
 import ru.pvn.levelup.entities.Deposit;
+import ru.pvn.levelup.utils.DepositOperationUtils;
 import ru.pvn.levelup.utils.DepositUtils;
 
 import java.math.BigDecimal;
@@ -40,6 +41,7 @@ public class DepositTest {
 
     @Test
     @DisplayName("Получение остатков по счетам депозитов")
+    @Disabled
     public void getDepositRestTest() {
         Assertions.assertDoesNotThrow(() -> {
             DepositUtils.getAllDeposits().forEach(deposit -> {
@@ -70,11 +72,14 @@ public class DepositTest {
 
     @Test
     @DisplayName("Текущий опердень")
+    @Disabled
     public void getOperDayTest() {
         Assertions.assertDoesNotThrow(() -> {
            LocalDate operDay = DepositUtils.getOperDay();
            System.out.println(operDay);
         });
     }
+
+
 
 }

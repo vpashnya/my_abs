@@ -14,3 +14,15 @@ create table deposit(
                 )
 
 
+create table deposit_operation( id 			    int 	    AUTO_INCREMENT
+                            ,   deposit         int             not null      references deposit(id)
+                            ,   oper_date       date            not null
+                            ,   oper_sum        decimal(18,2)   not null
+                            ,   pay_doc_id      int
+                            ,   cash_oper_id    int
+                            ,   purpose         varchar(2000)   not null
+                            ,   state           varchar(20)     not null
+                            ,   refuse_reason   varchar(2000)
+                            ,	primary key(id)
+                            )
+

@@ -22,8 +22,23 @@ public class CurrentBankInfoUtils {
     }
 
     public void switch2NextDay() {
+        endDayDeposits();
         endDayCashWindow();
         bankInfoDaoImpl.switch2NextDay(bankInfo);
+    }
+
+    @SneakyThrows
+    public void endDayDeposits() {
+        HttpClient httpClient = HttpClient.newHttpClient();
+        HttpRequest req = HttpRequest
+                .newBuilder()
+                .uri(URI.create(IntegrationResource.DEPOSITS_ENDDAY))
+                .headers("Content-Type", "text/plain;charset=UTF-8")
+                .version(HttpClient.Version.HTTP_1_1)
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        httpClient.send(req, HttpResponse.BodyHandlers.ofByteArray());
     }
 
     @SneakyThrows
@@ -39,5 +54,7 @@ public class CurrentBankInfoUtils {
 
         httpClient.send(req, HttpResponse.BodyHandlers.ofByteArray());
     }
+
+
 
 }

@@ -18,6 +18,7 @@ import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @UtilityClass
 public class DepositUtils {
@@ -51,6 +52,47 @@ public class DepositUtils {
             return BigDecimal.ZERO;
         }
     }
+
+    public Deposit createDeposit(Map<String, String[]> params) {
+        Client client = DepositUtils.getClient(params.get("inn")[0], params.get("name")[0]);
+        Account account = DepositUtils.getAccount(Integer.parseInt(params.get("duration")[0]), client);
+        LocalDate operDay = DepositUtils.getOperDay();
+
+        Deposit deposit = new Deposit(null
+                , client.getId()
+                , client.getFullName()
+                , account.getId()
+                , account.getAccNum()
+                , new BigDecimal(params.get("sum")[0])
+                , new BigDecimal(params.get("prc")[0].replace("%", " ").trim())
+                , Integer.parseInt(params.get("duration")[0])
+                , operDay
+                , Deposit.Status.NEW
+                , switch (params.get("payto")[0]) {
+            case "cash" -> Deposit.PayTo.TO_CASH;
+            default -> Deposit.PayTo.IN_BANK;
+        }
+                , null);
+
+        DepositUtils.saveDeposit(deposit);
+
+        try {
+            DepositOperationUtils.openDeposit(deposit);
+            deposit.setStatus(Deposit.Status.WORK);
+        } catch (RuntimeException e) {
+            deposit.setStatus(Deposit.Status.REFUSED);
+            DepositUtils.saveDeposit(deposit);
+            throw e;
+        }
+        return deposit;
+    }
+
+    public void closeDeposit(Deposit deposit, LocalDate currDate) {
+        DepositOperationUtils.closeDepositOperations(deposit, currDate);
+        deposit.setStatus(Deposit.Status.CLOSED);
+        DepositUtils.saveDeposit(deposit);
+    }
+
 
     @SneakyThrows
     public Client getClient(String inn, String name) {
