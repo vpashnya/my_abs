@@ -4,56 +4,115 @@
 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.pvn.levelup</groupId>
-    <artifactId>my_abs</artifactId>
+    <artifactId>abs</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>My ABS fin core</name>
+    <name>ABS</name>
     <modules>
+        <module>abs_core</module>
         <module>fin_core</module>
-        <module>my_abs_core</module>
         <module>cash_window</module>
         <module>deposits</module>
     </modules>
+
     <properties>
         <maven.compiler.source>23</maven.compiler.source>
         <maven.compiler.target>23</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <abs_core_version>1.0.0-SNAPSHOT</abs_core_version>
+        <lombok_version>1.18.36</lombok_version>
+        <jackson_version>2.11.1</jackson_version>
+        <javax_persistence_version>2.2</javax_persistence_version>
+        <javax_servlet_version>4.0.1</javax_servlet_version>
+        <javax_servlet_jsp_version>2.3.3</javax_servlet_jsp_version>
+        <hiberante_core_version>5.5.8.Final</hiberante_core_version>
+        <jstl_version>1.2</jstl_version>
+        <mysql_connector_version>8.0.33</mysql_connector_version>
+        <postgresql_version>42.7.5</postgresql_version>
+        <ojdbc8_version>23.2.0.0</ojdbc8_version>
+        <junit_jupiter_eng_version>5.11.0-M1</junit_jupiter_eng_version>
     </properties>
-   <!-- <dependencies>
 
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.11.0-M1</version>
-            <scope>test</scope>
-        </dependency>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ru.pvn.levelup</groupId>
+                <artifactId>abs_core</artifactId>
+                <version>${abs_core_version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.36</version>
-            <scope>provided</scope>
-        </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok_version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>5.5.8.Final</version>
-        </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${jackson_version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.7.5</version>
-        </dependency>
+            <dependency>
+                <groupId>javax.persistence</groupId>
+                <artifactId>javax.persistence-api</artifactId>
+                <version>${javax_persistence_version}</version>
+            </dependency>
 
-        <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc8</artifactId>
-            <version>23.2.0.0</version>
-        </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax_servlet_version}</version>
+                <scope>provided</scope>
+            </dependency>
 
+            <dependency>
+                <groupId>javax.servlet.jsp</groupId>
+                <artifactId>javax.servlet.jsp-api</artifactId>
+                <version>${javax_servlet_jsp_version}</version>
+                <scope>provided</scope>
+            </dependency>
 
-    </dependencies>-->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hiberante_core_version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jstl</groupId>
+                <artifactId>jstl</artifactId>
+                <version>${jstl_version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${mysql_connector_version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgresql_version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.oracle.database.jdbc</groupId>
+                <artifactId>ojdbc8</artifactId>
+                <version>${ojdbc8_version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>${junit_jupiter_eng_version}</version>
+                <scope>test</scope>
+            </dependency>
+
+        </dependencies>
+
+    </dependencyManagement>
+
 
 </project>
