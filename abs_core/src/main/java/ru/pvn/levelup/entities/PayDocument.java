@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -28,6 +29,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Getter
 @Setter
 public class PayDocument implements ObjectInDB {
+
+    public PayDocument(Account debet, Account credit, BigDecimal docSum, String purpose) {
+        this.debet = debet;
+        this.credit = credit;
+        this.docSum = docSum;
+        this.purpose = purpose;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

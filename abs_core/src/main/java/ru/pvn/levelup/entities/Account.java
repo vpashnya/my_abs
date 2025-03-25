@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.math.BigDecimal;
 
 
@@ -28,6 +29,9 @@ import java.math.BigDecimal;
 @Setter
 @ToString
 public class Account implements ObjectInDB {
+
+    public Account(Integer id) { this.id = id; }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

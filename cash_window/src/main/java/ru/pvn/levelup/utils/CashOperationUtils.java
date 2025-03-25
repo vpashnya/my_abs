@@ -23,8 +23,10 @@ import java.util.Random;
 public class CashOperationUtils {
     private final CashOperationDaoImpl currentDao = CashOperationDaoImpl.getCurrentDao();
     private final Random random = new Random();
-    private final ObjectMapper jsonMapper = new ObjectMapper();
-    {
+    private final ObjectMapper jsonMapper;
+
+    static {
+        jsonMapper = new ObjectMapper();
         jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
@@ -86,7 +88,7 @@ public class CashOperationUtils {
             debet.setAccNum(cashOperation.getAccountNum());
         }
 
-        PayDocument payDocument = new PayDocument(null, debet, credit, cashOperation.getSumDoc(), null, null, null, cashOperation.getPurpose());
+        PayDocument payDocument = new PayDocument(debet, credit, cashOperation.getSumDoc(), cashOperation.getPurpose());
         return payDocument;
     }
 
@@ -114,13 +116,9 @@ public class CashOperationUtils {
         BigDecimal docSum = needSum.add(account.getRest());
 
         if (BigDecimal.ZERO.compareTo(docSum) < 0) {
-            PayDocument payDoc = new PayDocument(null
-                    , account
-                    , new Account(1, null, null, null, null)
+            PayDocument payDoc = new PayDocument(account
+                    , new Account(1)
                     , docSum
-                    , null
-                    , null
-                    , null
                     , "Подкрепление кассы " + cashPoint.getPointName()
             );
             PayDocument realDoc = sendPayDocument2FinCore(payDoc);

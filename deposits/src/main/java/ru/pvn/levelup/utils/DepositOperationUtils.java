@@ -61,27 +61,19 @@ public class DepositOperationUtils {
 
     public void openDeposit(Deposit deposit) {
         DepositOperation depOper = new DepositOperation(
-                null
-                , deposit
+                deposit
                 , deposit.getDateOpen()
                 , deposit.getAmount()
-                , null
-                , null
-                , "Открытие вклада "
                 , DepositOperation.State.NEW
-                , null
+                , "Открытие вклада "
         );
 
         DepositOperationDaoImpl.getCurrentDao().save(depOper);
 
         CashOperation cashOper = new CashOperation(
-                null
-                , null
-                , depOper.getDeposit().getAccountNum()
+                depOper.getDeposit().getAccountNum()
                 , depOper.getOperSum()
                 , CashOperation.Direction.TO_BANK
-                , null
-                , null
                 , depOper.getPurpose()
         );
         execCashOperation(depOper, cashOper);
@@ -92,39 +84,27 @@ public class DepositOperationUtils {
         BigDecimal depositRest = DepositUtils.getRest(deposit);
 
         DepositOperation depOper = new DepositOperation(
-                null
-                , deposit
+                deposit
                 , currDate
                 , depositRest
-                , null
-                , null
-                , "Закрытие вклада"
                 , DepositOperation.State.NEW
-                , null
+                , "Закрытие вклада"
         );
 
         if (deposit.getPayTo() == Deposit.PayTo.IN_BANK) {
             PayDocument payDocument = new PayDocument(
-                    null
-                    , new Account(deposit.getAccountExtId(), null, null, null, null)
+                    new Account(deposit.getAccountExtId(), null, null, null, null)
                     , new Account(1, null, null, null, null)
                     , depositRest
-                    , null
-                    , null
-                    , null
                     , "Выплата влкада при закрытии"
             );
             execPayDocument(depOper, payDocument);
 
         } else {
             CashOperation cashOperation = new CashOperation(
-                    null
-                    , null
-                    , deposit.getAccountNum()
+                    deposit.getAccountNum()
                     , depositRest
                     , CashOperation.Direction.FROM_BANK
-                    , null
-                    , null
                     , "Выплата влкада при закрытии"
             );
             execCashOperation(depOper, cashOperation);

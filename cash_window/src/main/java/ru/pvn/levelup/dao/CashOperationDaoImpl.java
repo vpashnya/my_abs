@@ -1,13 +1,11 @@
 package ru.pvn.levelup.dao;
 
 import lombok.Getter;
-import lombok.experimental.UtilityClass;
 import ru.pvn.levelup.abscore.AbstractAbsDao;
 import ru.pvn.levelup.dbhelpers.DBHelperCashWindow;
 import ru.pvn.levelup.entities.CashOperation;
 import ru.pvn.levelup.entities.CashPoint;
 
-import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 public class CashOperationDaoImpl extends AbstractAbsDao<CashOperation> {

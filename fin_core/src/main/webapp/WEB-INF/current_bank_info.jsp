@@ -1,27 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
+<head>
+    <title>ИНФОРМАЦИЯ О БАНКЕ</title>
+</head>
 <body>
 
 
 <table>
     <style type="text/css">
-        TABLE {
-            /*width: 100%;*/ /* Ширина таблицы */
-            border: 1px solid #399; /* Граница вокруг таблицы */
-            border-spacing: 7px 5px; /* Расстояние между границ */
-        }
-
-         TH {
-            background: #888888; /* Цвет фона */
-            border: 1px solid #333; /* Граница вокруг ячеек */
-            padding: 5px; /* Поля в ячейках */
-        }
-        TD{
-            background: #ffffff; /* Цвет фона */
-            border: 1px solid #333; /* Граница вокруг ячеек */
-            padding: 5px; /* Поля в ячейках */
-        }
+        <%@ include file="/WEB-INF/table_style.css"%>
     </style>
     <thead>
     <tr>
@@ -47,7 +35,7 @@
 
 <form method="POST">
     <param name="nextday" value="true"/>
-    <input type="submit" value="Перейти в следующий опер.день" />
+    <input type="submit" value="Перейти в следующий опер.день"/>
 </form>
 
 <br><br>
@@ -58,22 +46,7 @@
 
 <table>
     <style type="text/css">
-        TABLE {
-            /*width: 100%;*/ /* Ширина таблицы */
-            border: 1px solid #399; /* Граница вокруг таблицы */
-            border-spacing: 1px 1px; /* Расстояние между границ */
-        }
-
-        TH {
-            background: #888888; /* Цвет фона */
-            border: 1px solid #333; /* Граница вокруг ячеек */
-            padding: 5px; /* Поля в ячейках */
-        }
-        TD{
-            background: #ffffff; /* Цвет фона */
-            border: 1px solid #333; /* Граница вокруг ячеек */
-            padding: 5px; /* Поля в ячейках */
-        }
+        <%@ include file="/WEB-INF/table_style.css"%>
     </style>
     <thead>
     <tr>
@@ -109,7 +82,6 @@
 
     </tbody>
 </table>
-
 
 
 </body>

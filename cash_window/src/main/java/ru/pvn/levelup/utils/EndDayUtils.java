@@ -14,13 +14,9 @@ public class EndDayUtils {
             Account accCashPoint = CashOperationUtils.getAccountByNum(cashPoint.getPointAccountNum());
             if (BigDecimal.ZERO.compareTo(accCashPoint.getRest()) != 0) {
                 PayDocument payDocument = new PayDocument(
-                        null
-                        , new Account(1, null, null, null, null)
+                        new Account(1)
                         , accCashPoint
                         , accCashPoint.getRest().abs()
-                        , null
-                        , null
-                        , null
                         , "Инкассация "
                 );
 

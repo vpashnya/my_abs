@@ -3,28 +3,14 @@
 
 <html>
 <head>
+    <link rel="stylesheet" href="css/table_style.css">
     <title>ПЛАТЕЖНЫЕ ДОКУМЕНТЫ</title>
 </head>
 <body>
 
 <table>
     <style type="text/css">
-        TABLE {
-            /*width: 100%;*/ /* Ширина таблицы */
-            border: 1px solid #399; /* Граница вокруг таблицы */
-            border-spacing: 1px 1px; /* Расстояние между границ */
-        }
-
-        TH {
-            background: #888888; /* Цвет фона */
-            border: 1px solid #333; /* Граница вокруг ячеек */
-            padding: 5px; /* Поля в ячейках */
-        }
-        TD{
-            background: #ffffff; /* Цвет фона */
-            border: 1px solid #333; /* Граница вокруг ячеек */
-            padding: 5px; /* Поля в ячейках */
-        }
+        <%@ include file="/WEB-INF/table_style.css"%>
     </style>
     <thead>
     <tr>
