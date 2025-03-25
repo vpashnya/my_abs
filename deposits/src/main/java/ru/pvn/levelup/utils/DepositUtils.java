@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import ru.pvn.levelup.abscore.Constants;
 import ru.pvn.levelup.dao.DepositDaoImpl;
 import ru.pvn.levelup.entities.Account;
 import ru.pvn.levelup.entities.Client;
@@ -93,7 +94,6 @@ public class DepositUtils {
         DepositUtils.saveDeposit(deposit);
     }
 
-
     @SneakyThrows
     public Client getClient(String inn, String name) {
         Client client = new Client(null, name, inn);
@@ -159,8 +159,8 @@ public class DepositUtils {
 
         HttpResponse<byte[]> resp = httpClient.send(req, HttpResponse.BodyHandlers.ofByteArray());
 
-        String date = jsonMapper.readValue(new String(resp.body()), String.class);
-        LocalDate operDay = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        String date = jsonMapper.readValue(resp.body(), String.class);
+        LocalDate operDay = LocalDate.parse(date, Constants.INTEGRAION_DATE_FORMAT);
 
         return operDay;
     }

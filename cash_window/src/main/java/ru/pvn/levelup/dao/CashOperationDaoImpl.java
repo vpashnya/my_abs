@@ -1,5 +1,6 @@
 package ru.pvn.levelup.dao;
 
+import lombok.Getter;
 import lombok.experimental.UtilityClass;
 import ru.pvn.levelup.abscore.AbstractAbsDao;
 import ru.pvn.levelup.dbhelpers.DBHelperCashWindow;
@@ -10,14 +11,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 public class CashOperationDaoImpl extends AbstractAbsDao<CashOperation> {
+    @Getter
     private static CashOperationDaoImpl currentDao = new CashOperationDaoImpl();
 
     private CashOperationDaoImpl() {
         super(CashOperation.class, DBHelperCashWindow.getEntityManager());
-    }
-
-    public static CashOperationDaoImpl getCurrentDao() {
-        return currentDao;
     }
 
     public Integer getCountOperationsByCashPoint(CashPoint cashPoint) {

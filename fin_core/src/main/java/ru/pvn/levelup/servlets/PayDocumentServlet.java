@@ -10,32 +10,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/paydocument")
 public class PayDocumentServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<PayDocument> payDocs = null;
+    private final ObjectMapper MAPPER = new ObjectMapper();
 
-        if (req.getParameterMap().containsKey("id")) {
-            PayDocument payDoc = PayDocumentUtils.getPayDocumentById(Integer.parseInt(req.getParameterMap().get("id")[0]));
-            payDocs = new ArrayList<>();
-            payDocs.add(payDoc);
-        } else {
-            payDocs = PayDocumentUtils.getAllPayDocuments();
-        }
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<PayDocument> payDocs = req.getParameterMap().containsKey("id")
+                ?
+                List.of(PayDocumentUtils.getPayDocumentById(Integer.parseInt(req.getParameter("id"))))
+                :
+                PayDocumentUtils.getAllPayDocuments();
+
         req.setAttribute("payDocsList", payDocs);
         getServletContext().getRequestDispatcher("/WEB-INF/paydocs.jsp").forward(req, resp);
 
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String reqBody  = new String(req.getInputStream().readAllBytes()) ;
-        ObjectMapper mapper = new ObjectMapper();
-        PayDocument document = mapper.readValue(reqBody, PayDocument.class);
+        PayDocument document = MAPPER.readValue(req.getInputStream().readAllBytes(), PayDocument.class);
         PayDocumentUtils.savePayDocument(document);
         PayDocumentUtils.executePayDocument(document);
-        resp.getOutputStream().write(mapper.writeValueAsString(document).getBytes());
+        resp.getOutputStream().write(MAPPER.writeValueAsString(document).getBytes());
     }
 }

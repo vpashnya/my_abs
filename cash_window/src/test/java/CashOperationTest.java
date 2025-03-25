@@ -64,12 +64,10 @@ public class CashOperationTest {
             CashOperationUtils.getAllCashOperations()
                     .stream()
                     .collect(Collectors.groupingBy(it -> {
-                        return ((CashOperation) it).getCashPoint();
+                        return it.getCashPoint();
                     }, Collectors.counting()))
                     .entrySet()
                     .stream().forEach(System.out::println);
-
-
         });
     }
 
@@ -98,7 +96,6 @@ public class CashOperationTest {
                     , null
             );
             System.out.println(CashOperationUtils.convertToPayDocument(cashOperation2));
-
         });
     }
 
@@ -111,7 +108,6 @@ public class CashOperationTest {
             CashPointUtils.getAllCashPoints().stream().forEach(
                     (it) -> {
                         CashOperationUtils.normalizeCashAccountRest(it, new BigDecimal(10));
-
                     });
         });
     }

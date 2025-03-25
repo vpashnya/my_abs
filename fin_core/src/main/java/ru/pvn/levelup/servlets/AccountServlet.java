@@ -11,22 +11,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/account")
 public class AccountServlet extends HttpServlet {
+    private final ObjectMapper MAPPER = new ObjectMapper();
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        final List<Account> accountList = new ArrayList<>();
-
-        if (req.getParameterMap().containsKey("id")) {
-            Account account = AccountUtils.getAccoutById(Integer.parseInt(req.getParameterMap().get("id")[0]));
-            accountList.add(account);
-
-        } else {
-            accountList.addAll(AccountUtils.getAllAccounts());
-        }
+        List<Account> accountList = req.getParameterMap().containsKey("id")
+                ?
+                List.of(AccountUtils.getAccoutById(Integer.parseInt(req.getParameter("id"))))
+                :
+                AccountUtils.getAllAccounts();
 
         accountList.stream().forEach(account -> {
             account.setRest(FinRecordUtils.getRest(account));
@@ -37,11 +33,9 @@ public class AccountServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String reqBody  = new String(req.getInputStream().readAllBytes()) ;
-        ObjectMapper mapper = new ObjectMapper();
-        Account account = mapper.readValue(reqBody, Account.class);
+        Account account = MAPPER.readValue(req.getInputStream().readAllBytes(), Account.class);
         Account newAccount = AccountUtils.openInBalancePosition(account.getAccNum(), account.getClient());
-        resp.getOutputStream().write(mapper.writeValueAsString(newAccount).getBytes());
+        resp.getOutputStream().write(MAPPER.writeValueAsString(newAccount).getBytes());
 
     }
 

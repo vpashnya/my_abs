@@ -1,5 +1,6 @@
 package ru.pvn.levelup.dao;
 
+import lombok.Getter;
 import ru.pvn.levelup.abscore.AbstractAbsDao;
 import ru.pvn.levelup.dbhelpers.DBHelperFinCore;
 import ru.pvn.levelup.entities.Account;
@@ -14,14 +15,11 @@ import java.util.List;
 
 
 public class FinRecordDaoImpl extends AbstractAbsDao<FinRecord> {
+    @Getter
     private static FinRecordDaoImpl currentDao = new FinRecordDaoImpl();
 
     private FinRecordDaoImpl() {
         super(FinRecord.class, DBHelperFinCore.getEntityManager());
-    }
-
-    public static FinRecordDaoImpl getDao() {
-        return currentDao;
     }
 
     public BigDecimal getRest(Integer accountId, LocalDate date) {

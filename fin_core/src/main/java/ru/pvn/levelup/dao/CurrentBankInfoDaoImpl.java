@@ -1,5 +1,6 @@
 package ru.pvn.levelup.dao;
 
+import lombok.Getter;
 import ru.pvn.levelup.abscore.AbstractAbsDao;
 import ru.pvn.levelup.dbhelpers.DBHelperFinCore;
 import ru.pvn.levelup.entities.CurrentBankInfo;
@@ -9,14 +10,11 @@ import javax.persistence.Query;
 import java.util.List;
 
 public class CurrentBankInfoDaoImpl extends AbstractAbsDao<CurrentBankInfo> {
+    @Getter
     private static CurrentBankInfoDaoImpl currentDao = new CurrentBankInfoDaoImpl();
 
     private CurrentBankInfoDaoImpl() {
         super(CurrentBankInfo.class, DBHelperFinCore.getEntityManager());
-    }
-
-    public static CurrentBankInfoDaoImpl getDao() {
-        return currentDao;
     }
 
     @Override

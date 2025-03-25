@@ -12,10 +12,10 @@ public class CountTest {
     @DisplayName("Количество объектов")
     public void countTest(){
         Assertions.assertDoesNotThrow(()->{
-            System.out.println("Клиентов " + ClientDaoImpl.getDao().count());
-            System.out.println("Счетов " + AccountDaoImpl.getDao().count());
-            System.out.println("Платежных документов " + PayDocumentDaoImpl.getDao().count());
-            System.out.println("Проводок " + FinRecordDaoImpl.getDao().count());
+            System.out.println("Клиентов " + ClientDaoImpl.getCurrentDao().count());
+            System.out.println("Счетов " + AccountDaoImpl.getCurrentDao().count());
+            System.out.println("Платежных документов " + PayDocumentDaoImpl.getCurrentDao().count());
+            System.out.println("Проводок " + FinRecordDaoImpl.getCurrentDao().count());
         });
     }
 }

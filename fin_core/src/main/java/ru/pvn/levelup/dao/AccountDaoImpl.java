@@ -1,5 +1,6 @@
 package ru.pvn.levelup.dao;
 
+import lombok.Getter;
 import ru.pvn.levelup.abscore.AbstractAbsDao;
 import ru.pvn.levelup.dbhelpers.DBHelperFinCore;
 import ru.pvn.levelup.entities.Account;
@@ -10,20 +11,18 @@ import javax.persistence.Query;
 import java.util.List;
 
 public class AccountDaoImpl extends AbstractAbsDao<Account> {
+
+    @Getter
     private static AccountDaoImpl currentDao = new AccountDaoImpl();
 
     private AccountDaoImpl() {
         super(Account.class, DBHelperFinCore.getEntityManager());
     }
 
-    public static AccountDaoImpl getDao() {
-        return currentDao;
-    }
-
     public Account findOrCreate(Integer id, Account.AccType accType, String accNum, Client client) {
         EntityManager entityManager = getEntityManager();
         entityManager.getTransaction().begin();
-        Query query = entityManager.createQuery("from Account where id = ?1 or acc_num = ?2");
+        Query query = entityManager.createQuery("select acc from Account acc where acc.id = ?1 or acc.accNum = ?2");
         query.setParameter(1, id);
         query.setParameter(2, accNum);
         List<Account> accounts = query.getResultList();
@@ -39,7 +38,7 @@ public class AccountDaoImpl extends AbstractAbsDao<Account> {
     }
 
     public Account findByNum(String accNum) {
-        Query query = getEntityManager().createQuery("from Account where  acc_num = ?1");
+        Query query = getEntityManager().createQuery("select acc from Account acc where  acc.accNum = ?1");
         query.setParameter(1, accNum);
         return (Account) query.getResultList().getFirst();
     }
@@ -57,8 +56,6 @@ public class AccountDaoImpl extends AbstractAbsDao<Account> {
 
         List<String> accNums = query.getResultList();
 
-        return accNums.isEmpty() ? balancePosition.substring(0, 5) + "810" + "000000000000" : accNums.get(0);
+        return accNums.isEmpty() ? balancePosition.substring(0, 5) + "810000000000000" : accNums.get(0);
     }
-
-
 }

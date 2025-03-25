@@ -17,26 +17,24 @@ import java.util.List;
 
 @WebServlet("/cashoperation")
 public class CashOperationServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<CashOperation> cashOperationList;
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
-        if (req.getParameterMap().containsKey("id")) {
-            CashOperation cashOperation = CashOperationUtils.getCashOperationById(Integer.parseInt(req.getParameterMap().get("id")[0]));
-            cashOperationList = new ArrayList<>();
-            cashOperationList.add(cashOperation);
-        } else {
-            cashOperationList = CashOperationUtils.getAllCashOperations();
-        }
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<CashOperation> cashOperationList =
+                req.getParameterMap().containsKey("id")
+                        ?
+                        List.of(CashOperationUtils.getCashOperationById(Integer.parseInt(req.getParameter("id"))))
+                        :
+                        CashOperationUtils.getAllCashOperations();
+
         req.setAttribute("cashOperationList", cashOperationList);
         getServletContext().getRequestDispatcher("/WEB-INF/cashoperation.jsp").forward(req, resp);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String reqBody  = new String(req.getInputStream().readAllBytes()) ;
-        ObjectMapper mapper = new ObjectMapper();
-        CashOperation cashOperation = mapper.readValue(reqBody, CashOperation.class);
+        CashOperation cashOperation = MAPPER.readValue(req.getInputStream().readAllBytes(), CashOperation.class);
         CashOperationUtils.saveAndExecute(cashOperation);
-        resp.getOutputStream().write(mapper.writeValueAsString(cashOperation).getBytes());
+        resp.getOutputStream().write(MAPPER.writeValueAsString(cashOperation).getBytes());
     }
 
 }

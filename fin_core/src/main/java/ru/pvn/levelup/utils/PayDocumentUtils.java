@@ -12,7 +12,7 @@ import java.util.List;
 @UtilityClass
 public class PayDocumentUtils {
 
-    private PayDocumentDaoImpl payDocumentDao = PayDocumentDaoImpl.getDao();
+    private PayDocumentDaoImpl payDocumentDao = PayDocumentDaoImpl.getCurrentDao();
 
     public void savePayDocument(PayDocument payDocument) {
         if (payDocument.getDebet().getId() != null) {

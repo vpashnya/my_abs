@@ -1,18 +1,17 @@
 package ru.pvn.levelup.servlets;
 
-import ru.pvn.levelup.entities.CurrentBankInfo;
-import ru.pvn.levelup.utils.AccountUtils;
-import ru.pvn.levelup.utils.ClientUtils;
-import ru.pvn.levelup.utils.CurrentBankInfoUtils;
-import ru.pvn.levelup.utils.FinRecordUtils;
-import ru.pvn.levelup.utils.PayDocumentUtils;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static ru.pvn.levelup.utils.CurrentBankInfoUtils.*;
+import static ru.pvn.levelup.utils.ClientUtils.*;
+import static ru.pvn.levelup.utils.AccountUtils.*;
+import static ru.pvn.levelup.utils.PayDocumentUtils.*;
+import static ru.pvn.levelup.utils.FinRecordUtils.*;
 
 @WebServlet("/")
 public class CurrentBankInfoServlet extends HttpServlet {
@@ -21,23 +20,22 @@ public class CurrentBankInfoServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CurrentBankInfoUtils.switch2NextDay();
+        switch2NextDay();
         getCurrentBankInfoJsp(req, resp);
 
     }
 
     private void getCurrentBankInfoJsp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CurrentBankInfo bankInfo = CurrentBankInfoUtils.getBankInfo();
 
-        req.setAttribute("bankName", bankInfo.getBankClient().getFullName());
-        req.setAttribute("bankCode", bankInfo.getBankCode());
-        req.setAttribute("bankCorAcc", bankInfo.getCorrAccount().getAccNum());
-        req.setAttribute("bankOperDay", bankInfo.getOperDay());
+        req.setAttribute("bankName", getBankInfo().getBankClient().getFullName());
+        req.setAttribute("bankCode", getBankInfo().getBankCode());
+        req.setAttribute("bankCorAcc", getBankInfo().getCorrAccount().getAccNum());
+        req.setAttribute("bankOperDay", getBankInfo().getOperDay());
 
-        req.setAttribute("clientsCount", ClientUtils.getClientCount());
-        req.setAttribute("accountsCount", AccountUtils.getAccountCount());
-        req.setAttribute("payDocsCount", PayDocumentUtils.getPayDocsCount());
-        req.setAttribute("finRecordsCount", FinRecordUtils.getFinRecordsCount());
+        req.setAttribute("clientsCount", getClientCount());
+        req.setAttribute("accountsCount", getAccountCount());
+        req.setAttribute("payDocsCount", getPayDocsCount());
+        req.setAttribute("finRecordsCount", getFinRecordsCount());
 
         getServletContext().getRequestDispatcher("/WEB-INF/current_bank_info.jsp").forward(req, resp);
 

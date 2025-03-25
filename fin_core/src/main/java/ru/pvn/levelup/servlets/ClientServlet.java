@@ -10,32 +10,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/client")
 public class ClientServlet extends HttpServlet {
+    private final ObjectMapper MAPPER = new ObjectMapper();
+
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Client> clientList = null;
+        List<Client> clientList = req.getParameterMap().containsKey("id")
+                ?
+                List.of(ClientUtils.getClientById(Integer.parseInt(req.getParameter("id"))))
+                :
+                ClientUtils.getAllClient();
 
-        if (req.getParameterMap().containsKey("id")) {
-            Client client = ClientUtils.getClientById(Integer.parseInt(req.getParameterMap().get("id")[0]));
-            clientList = new ArrayList<>();
-            clientList.add(client);
-
-        } else {
-            clientList = ClientUtils.getAllClient();
-        }
         req.setAttribute("clientList", clientList);
         getServletContext().getRequestDispatcher("/WEB-INF/client.jsp").forward(req, resp);
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String reqBody  = new String(req.getInputStream().readAllBytes()) ;
-        ObjectMapper mapper = new ObjectMapper();
-        Client client = mapper.readValue(reqBody, Client.class);
+        Client client = MAPPER.readValue(req.getInputStream().readAllBytes(), Client.class);
         Client chkClient = ClientUtils.getClientByParams(client.getId(), client.getFullName(), client.getInn());
-        resp.getOutputStream().write(mapper.writeValueAsString(chkClient).getBytes());
+        resp.getOutputStream().write(MAPPER.writeValueAsString(chkClient).getBytes());
 
     }
 }

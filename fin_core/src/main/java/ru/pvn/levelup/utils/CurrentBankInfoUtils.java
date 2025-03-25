@@ -13,7 +13,7 @@ import java.net.http.HttpResponse;
 
 @UtilityClass
 public class CurrentBankInfoUtils {
-    private CurrentBankInfoDaoImpl bankInfoDaoImpl = CurrentBankInfoDaoImpl.getDao();
+    private CurrentBankInfoDaoImpl bankInfoDaoImpl = CurrentBankInfoDaoImpl.getCurrentDao();
 
     private CurrentBankInfo bankInfo = bankInfoDaoImpl.get(0);
 

@@ -15,13 +15,14 @@ import java.rmi.RemoteException;
 
 @WebServlet("/accountrest")
 public class AccountRestServlet extends HttpServlet {
+    private ObjectMapper mapper = new ObjectMapper();
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Account account;
         if (req.getParameterMap().containsKey("id")) {
-            account = AccountUtils.getAccoutById(Integer.parseInt(req.getParameterMap().get("id")[0]));
+            account = AccountUtils.getAccoutById(Integer.parseInt(req.getParameter("id")));
         } else if (req.getParameterMap().containsKey("accnum")) {
-            account = AccountUtils.getAccoutByNum(req.getParameterMap().get("accnum")[0]);
+            account = AccountUtils.getAccoutByNum(req.getParameter("accnum"));
         } else {
             throw new RuntimeException("Невозможно определить счет");
         }
@@ -31,7 +32,6 @@ public class AccountRestServlet extends HttpServlet {
         }
 
         account.setRest(FinRecordUtils.getRest(account));
-        ObjectMapper mapper = new ObjectMapper();
         resp.getOutputStream().write(mapper.writeValueAsString(account).getBytes());
     }
 }

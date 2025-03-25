@@ -21,7 +21,7 @@ public class AccountUtils {
             , "40802", "40817", "40821"
     );
 
-    private static AccountDaoImpl accountDao = AccountDaoImpl.getDao();
+    private static AccountDaoImpl accountDao = AccountDaoImpl.getCurrentDao();
 
 
     public Account openInBalancePosition(String balancePosition, Client client) {

@@ -1,5 +1,6 @@
 package ru.pvn.levelup.dao;
 
+import lombok.Getter;
 import ru.pvn.levelup.abscore.AbstractAbsDao;
 import ru.pvn.levelup.dbhelpers.DBHelperFinCore;
 import ru.pvn.levelup.entities.Client;
@@ -9,14 +10,11 @@ import javax.persistence.Query;
 import java.util.List;
 
 public class ClientDaoImpl extends AbstractAbsDao<Client> {
+    @Getter
     private static ClientDaoImpl currentDao = new ClientDaoImpl();
 
     private ClientDaoImpl() {
         super(Client.class, DBHelperFinCore.getEntityManager());
-    }
-
-    public static ClientDaoImpl getDao() {
-        return currentDao;
     }
 
     public Client findOrCreate(Integer id, String name, String inn) {

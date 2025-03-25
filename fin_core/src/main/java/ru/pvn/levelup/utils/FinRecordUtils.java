@@ -13,7 +13,7 @@ import java.util.List;
 @UtilityClass
 public class FinRecordUtils {
 
-    private FinRecordDaoImpl finRecordDao = FinRecordDaoImpl.getDao();
+    private FinRecordDaoImpl finRecordDao = FinRecordDaoImpl.getCurrentDao();
 
     public void createFinRecords(PayDocument document) {
         finRecordDao.save(

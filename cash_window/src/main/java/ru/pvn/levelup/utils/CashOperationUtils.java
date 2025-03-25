@@ -21,9 +21,12 @@ import java.util.Random;
 
 @UtilityClass
 public class CashOperationUtils {
-    private CashOperationDaoImpl currentDao = CashOperationDaoImpl.getCurrentDao();
-    private Random random = new Random();
-    private ObjectMapper jsonMapper = new ObjectMapper();
+    private final CashOperationDaoImpl currentDao = CashOperationDaoImpl.getCurrentDao();
+    private final Random random = new Random();
+    private final ObjectMapper jsonMapper = new ObjectMapper();
+    {
+        jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
+    }
 
     public List<CashOperation> getAllCashOperations() {
         return currentDao.getAll();
@@ -32,7 +35,6 @@ public class CashOperationUtils {
     public CashOperation getCashOperationById(int id) {
         return currentDao.get(id);
     }
-
 
     public void saveAndExecute(CashOperation cashOperation) {
         cashOperation.setState(CashOperation.State.NEW);
@@ -65,7 +67,7 @@ public class CashOperationUtils {
                 cashOperation.setState(CashOperation.State.REFUSED);
                 cashOperation.setRefuseReason(payDocFrom.getRefuseReason());
             }
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             cashOperation.setState(CashOperation.State.REFUSED);
             cashOperation.setRefuseReason(e.getMessage());
         }
@@ -90,9 +92,7 @@ public class CashOperationUtils {
 
     @SneakyThrows
     public PayDocument sendPayDocument2FinCore(PayDocument payDocument) {
-        jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
         String reqBody = jsonMapper.writeValueAsString(payDocument);
-
         HttpClient httpClient = HttpClient.newHttpClient();
         HttpRequest req = HttpRequest
                 .newBuilder()
@@ -127,9 +127,7 @@ public class CashOperationUtils {
             if (realDoc.getState() == PayDocument.State.REFUSED) {
                 throw new RuntimeException("Ошибка подкрепления кассы " + realDoc.getRefuseReason());
             }
-
         }
-
     }
 
     @SneakyThrows

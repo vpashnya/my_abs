@@ -8,7 +8,7 @@ import java.util.List;
 
 @UtilityClass
 public class ClientUtils {
-    private ClientDaoImpl clientDao = ClientDaoImpl.getDao();
+    private ClientDaoImpl clientDao = ClientDaoImpl.getCurrentDao();
 
     public void saveClient(Client client) {
         clientDao.save(client);

@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 
 @WebServlet("/")
@@ -28,13 +28,14 @@ public class CashPointServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        final List<CashPointWithOperation> cashPointList = new ArrayList<>();
-
-        CashPointUtils
+        List<CashPointWithOperation> cashPointList = CashPointUtils
                 .getAllCashPoints()
                 .stream()
-                .forEach(it->{cashPointList.add(new CashPointWithOperation(it, CashOperationUtils.getCountOperationsByCashPoint(it)));});
+                .map((cashPoint) -> {
+                    return new CashPointWithOperation(cashPoint, CashOperationUtils.getCountOperationsByCashPoint(cashPoint));
+                })
+                .collect(Collectors.toList());
+
 
         req.setAttribute("cashPointList", cashPointList);
         getServletContext().getRequestDispatcher("/WEB-INF/cashpoint.jsp").forward(req, resp);

@@ -17,16 +17,15 @@ public class EndOperDayUtils {
                 .forEach(deposit -> {
                     try {
                         DepositOperationUtils.addProcent(deposit, curDay);
-                    }catch (RuntimeException e) {
+                    } catch (Exception e) {
                         System.out.println("Ошибка начисления процентов по депозиту " + deposit);
                     }
-
 
                     if (deposit.getDateOpen().plusDays(deposit.getDuration()).compareTo(curDay) <= 0) {
                         System.out.println("to close " + deposit);
                         try {
                             DepositUtils.closeDeposit(deposit, curDay);
-                        } catch (RuntimeException e) {
+                        } catch (Exception e) {
                             System.out.println(e.getMessage());
                         }
                     }
