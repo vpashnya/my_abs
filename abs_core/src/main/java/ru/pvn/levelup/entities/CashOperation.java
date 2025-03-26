@@ -29,13 +29,6 @@ import java.math.BigDecimal;
 @Table(name = "cash_operation")
 public class CashOperation implements ObjectInDB {
 
-    public CashOperation(String accountNum, BigDecimal sumDoc, Direction direction, String purpose) {
-        this.accountNum = accountNum;
-        this.sumDoc = sumDoc;
-        this.direction = direction;
-        this.purpose = purpose;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -63,6 +56,13 @@ public class CashOperation implements ObjectInDB {
 
     @Column
     private String purpose;
+
+    public CashOperation(String accountNum, BigDecimal sumDoc, Direction direction, String purpose) {
+        this.accountNum = accountNum;
+        this.sumDoc = sumDoc;
+        this.direction = direction;
+        this.purpose = purpose;
+    }
 
     public enum Direction {
         TO_BANK, FROM_BANK

@@ -31,9 +31,7 @@ public class CashPointServlet extends HttpServlet {
         List<CashPointWithOperation> cashPointList = CashPointUtils
                 .getAllCashPoints()
                 .stream()
-                .map((cashPoint) -> {
-                    return new CashPointWithOperation(cashPoint, CashOperationUtils.getCountOperationsByCashPoint(cashPoint));
-                })
+                .map(cashPoint -> new CashPointWithOperation(cashPoint, CashOperationUtils.getCountOperationsByCashPoint(cashPoint)))
                 .collect(Collectors.toList());
 
 

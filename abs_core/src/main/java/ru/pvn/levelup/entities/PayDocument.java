@@ -30,13 +30,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Setter
 public class PayDocument implements ObjectInDB {
 
-    public PayDocument(Account debet, Account credit, BigDecimal docSum, String purpose) {
-        this.debet = debet;
-        this.credit = credit;
-        this.docSum = docSum;
-        this.purpose = purpose;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -66,8 +59,11 @@ public class PayDocument implements ObjectInDB {
     @Column
     private String purpose;
 
-    public enum State {
-        NEW, EXECUTED, REFUSED
+    public PayDocument(Account debet, Account credit, BigDecimal docSum, String purpose) {
+        this.debet = debet;
+        this.credit = credit;
+        this.docSum = docSum;
+        this.purpose = purpose;
     }
 
     @Override
@@ -83,4 +79,9 @@ public class PayDocument implements ObjectInDB {
                 ", refuse_reason=" + refuseReason +
                 '}';
     }
+
+    public enum State {
+        NEW, EXECUTED, REFUSED
+    }
+
 }

@@ -18,10 +18,8 @@ public class PayDocumentServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<PayDocument> payDocs = req.getParameterMap().containsKey("id")
-                ?
-                List.of(PayDocumentUtils.getPayDocumentById(Integer.parseInt(req.getParameter("id"))))
-                :
-                PayDocumentUtils.getAllPayDocuments();
+                ? List.of(PayDocumentUtils.getPayDocumentById(Integer.parseInt(req.getParameter("id"))))
+                : PayDocumentUtils.getAllPayDocuments();
 
         req.setAttribute("payDocsList", payDocs);
         getServletContext().getRequestDispatcher("/WEB-INF/paydocs.jsp").forward(req, resp);

@@ -19,10 +19,8 @@ public class AccountServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Account> accountList = req.getParameterMap().containsKey("id")
-                ?
-                List.of(AccountUtils.getAccoutById(Integer.parseInt(req.getParameter("id"))))
-                :
-                AccountUtils.getAllAccounts();
+                ? List.of(AccountUtils.getAccoutById(Integer.parseInt(req.getParameter("id"))))
+                : AccountUtils.getAllAccounts();
 
         accountList.stream().forEach(account -> {
             account.setRest(FinRecordUtils.getRest(account));

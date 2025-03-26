@@ -16,6 +16,8 @@
         <maven.compiler.source>23</maven.compiler.source>
         <maven.compiler.target>23</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <mvn_jar_plugin_version>3.2.2</mvn_jar_plugin_version>
+        <mvn_complile_plugin_version>3.12.1</mvn_complile_plugin_version>
     </properties>
 
     <dependencies>
@@ -41,12 +43,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>${mvn_jar_plugin_version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.12.1</version>
+                <version>${mvn_complile_plugin_version}</version>
                 <configuration>
                     <annotationProcessorPaths>
                         <path>

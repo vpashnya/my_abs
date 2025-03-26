@@ -20,10 +20,6 @@ import javax.persistence.Id;
 @Setter
 @ToString
 public class Client implements ObjectInDB {
-    public Client(String fullName, String inn) {
-        this.fullName = fullName;
-        this.inn = inn;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,5 +31,9 @@ public class Client implements ObjectInDB {
     @Column
     private String inn;
 
+    public Client(String fullName, String inn) {
+        this.fullName = fullName;
+        this.inn = inn;
+    }
 
 }

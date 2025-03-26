@@ -30,14 +30,6 @@ import java.time.LocalDate;
 @Table(name = "deposit_operation")
 public class DepositOperation implements ObjectInDB {
 
-    public DepositOperation(Deposit deposit, LocalDate operDate, BigDecimal operSum, State state, String purpose) {
-        this.deposit = deposit;
-        this.operDate = operDate;
-        this.operSum = operSum;
-        this.state = state;
-        this.purpose = purpose;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -67,6 +59,14 @@ public class DepositOperation implements ObjectInDB {
 
     @Column(name = "refuse_reason")
     private String refuseReason;
+
+    public DepositOperation(Deposit deposit, LocalDate operDate, BigDecimal operSum, State state, String purpose) {
+        this.deposit = deposit;
+        this.operDate = operDate;
+        this.operSum = operSum;
+        this.state = state;
+        this.purpose = purpose;
+    }
 
     public enum State {NEW, SENDED, EXECUTED, REFUSED}
 

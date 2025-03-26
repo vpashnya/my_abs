@@ -15,10 +15,8 @@ import java.util.List;
 public class DepositServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final List<Deposit> depositList = req.getParameterMap().containsKey("id")
-                ?
-                List.of(DepositUtils.getDepositById(Integer.parseInt(req.getParameter("id"))))
-                :
-                DepositUtils.getAllDeposits();
+                ? List.of(DepositUtils.getDepositById(Integer.parseInt(req.getParameter("id"))))
+                : DepositUtils.getAllDeposits();
 
 
         depositList.stream().forEach(deposit -> {

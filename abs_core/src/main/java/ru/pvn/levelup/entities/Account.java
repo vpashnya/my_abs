@@ -30,8 +30,6 @@ import java.math.BigDecimal;
 @ToString
 public class Account implements ObjectInDB {
 
-    public Account(Integer id) { this.id = id; }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -49,6 +47,8 @@ public class Account implements ObjectInDB {
 
     @Transient
     private BigDecimal rest;
+
+    public Account(Integer id) { this.id = id; }
 
     public enum AccType {ACTIVE, PASSIVE, MIXED}
 }

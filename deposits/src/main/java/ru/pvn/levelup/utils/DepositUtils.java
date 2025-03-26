@@ -69,10 +69,7 @@ public class DepositUtils {
                 , Integer.parseInt(params.get("duration")[0])
                 , operDay
                 , Deposit.Status.NEW
-                , switch (params.get("payto")[0]) {
-            case "cash" -> Deposit.PayTo.TO_CASH;
-            default -> Deposit.PayTo.IN_BANK;
-        }
+                , switch (params.get("payto")[0]) { case "cash" -> Deposit.PayTo.TO_CASH; default -> Deposit.PayTo.IN_BANK;}
                 , null);
 
         DepositUtils.saveDeposit(deposit);

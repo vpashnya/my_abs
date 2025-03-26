@@ -30,44 +30,46 @@ public class Deposit implements ObjectInDB {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    private Integer id;
 
     @Column(name="client_ext_id")
-    Integer clientExtId;
+    private Integer clientExtId;
 
     @Column(name="client_name")
-    String clientName;
+    private String clientName;
 
     @Column(name="account_ext_id")
-    Integer accountExtId;
+    private Integer accountExtId;
 
     @Column(name="account_num")
-    String accountNum;
+    private String accountNum;
 
     @Column
-    BigDecimal amount;
+    private BigDecimal amount;
 
     @Column
-    BigDecimal rate;
+    private BigDecimal rate;
 
     @Column
-    Integer duration;
+    private Integer duration;
 
     @Column(name="date_open")
-    LocalDate dateOpen;
+    private LocalDate dateOpen;
 
     @Enumerated(EnumType.STRING)
     @Column
-    Status status;
+    private Status status;
 
     @Enumerated(EnumType.STRING)
     @Column(name="pay_to")
-    PayTo payTo;
+    private PayTo payTo;
+
+    @Transient
+    private BigDecimal accountRest;
 
     public enum Status {NEW, WORK, CLOSED, REFUSED}
 
     public enum PayTo{TO_CASH, IN_BANK}
 
-    @Transient
-    private BigDecimal accountRest;
+
 }

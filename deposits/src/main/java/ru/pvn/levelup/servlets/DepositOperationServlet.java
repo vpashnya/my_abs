@@ -16,10 +16,8 @@ public class DepositOperationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<DepositOperation> depOperList =
                 req.getParameterMap().containsKey("id")
-                        ?
-                        List.of(DepositOperationUtils.getDepositOperationById(Integer.parseInt(req.getParameter("id"))))
-                        :
-                        DepositOperationUtils.getAllDepositOperation();
+                        ? List.of(DepositOperationUtils.getDepositOperationById(Integer.parseInt(req.getParameter("id"))))
+                        : DepositOperationUtils.getAllDepositOperation();
 
 
         req.setAttribute("depOperList", depOperList);

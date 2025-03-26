@@ -1,10 +1,13 @@
 package ru.pvn.levelup.abscore;
 
+import lombok.Getter;
+
 import javax.persistence.EntityManager;
 import java.util.List;
 
 public abstract class AbstractAbsDao<T extends ObjectInDB> implements AbsDao<T> {
     private final Class<T> currentClass;
+    @Getter
     private final EntityManager entityManager;
 
     public AbstractAbsDao(Class<T> currentClass, EntityManager entityManager) {
@@ -53,7 +56,4 @@ public abstract class AbstractAbsDao<T extends ObjectInDB> implements AbsDao<T> 
         return l.intValue();
     }
 
-    public EntityManager getEntityManager() {
-        return entityManager;
-    }
 }

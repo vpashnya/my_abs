@@ -18,6 +18,6 @@ public class OperDayServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String date = CurrentBankInfoUtils.getBankInfo().getOperDay().format(Constants.INTEGRAION_DATE_FORMAT);
-        resp.getOutputStream().write(MAPPER.writeValueAsString(date).getBytes());
+        resp.getWriter().write(MAPPER.writeValueAsString(date));
     }
 }

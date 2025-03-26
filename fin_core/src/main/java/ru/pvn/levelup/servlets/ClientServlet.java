@@ -18,10 +18,8 @@ public class ClientServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Client> clientList = req.getParameterMap().containsKey("id")
-                ?
-                List.of(ClientUtils.getClientById(Integer.parseInt(req.getParameter("id"))))
-                :
-                ClientUtils.getAllClient();
+                ? List.of(ClientUtils.getClientById(Integer.parseInt(req.getParameter("id"))))
+                : ClientUtils.getAllClient();
 
         req.setAttribute("clientList", clientList);
         getServletContext().getRequestDispatcher("/WEB-INF/client.jsp").forward(req, resp);

@@ -16,10 +16,8 @@ public class FinRecordServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<FinRecord> recordList =
                 req.getParameterMap().containsKey("id")
-                        ?
-                        List.of(FinRecordUtils.getFinRecordById(Integer.parseInt(req.getParameter("id"))))
-                        :
-                        FinRecordUtils.getAllFinRecords();
+                        ? List.of(FinRecordUtils.getFinRecordById(Integer.parseInt(req.getParameter("id"))))
+                        : FinRecordUtils.getAllFinRecords();
 
         req.setAttribute("recList", recordList);
         getServletContext().getRequestDispatcher("/WEB-INF/finrecs.jsp").forward(req, resp);
